@@ -5,7 +5,7 @@ import 'package:nin_ui/nin_ui.dart';
 class NinUiScaffold extends StatelessWidget {
   final Widget body;
   final AppBar? appBar;
-  final Widget? drawer;
+  final Drawer? drawer;
   final Widget? floatingActionButton;
   final NavigationBar? navigationBar;
   const NinUiScaffold({
@@ -29,6 +29,7 @@ class NinUiScaffold extends StatelessWidget {
         ? Brightness.light
         : Brightness.dark;
     final bool isSmallScreen = MediaQuery.of(context).size.width < 500;
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 880;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
@@ -39,9 +40,8 @@ class NinUiScaffold extends StatelessWidget {
       ),
       child: Scaffold(
         backgroundColor: bgColor,
-        appBar: appBar == null
-            ? null
-            : AppBar(
+        appBar: appBar != null && isSmallScreen
+            ? AppBar(
                 key: appBar!.key,
                 leading: appBar!.leading,
                 automaticallyImplyLeading: appBar!.automaticallyImplyLeading,
@@ -72,15 +72,24 @@ class NinUiScaffold extends StatelessWidget {
                 systemOverlayStyle: appBar!.systemOverlayStyle,
                 forceMaterialTransparency: appBar!.forceMaterialTransparency,
                 clipBehavior: appBar!.clipBehavior,
-              ),
-        drawer: drawer,
+              )
+            : null,
+        drawer: drawer != null && !isLargeScreen ? drawer : null,
         body: Row(
           children: [
             if (!isSmallScreen && navigationBar != null)
               NavigationRail(
                 useIndicator: true,
-                extended: false,
+                extended: (isLargeScreen && drawer == null) ? true : false,
+                minExtendedWidth: 158,
                 backgroundColor: bgColor,
+                leading: drawer != null && !isLargeScreen
+                    ? const DrawerButton()
+                    : appBar?.leading != null
+                        ? appBar!.leading
+                        : const SizedBox(
+                            height: 38,
+                          ),
                 destinations: navigationBar!.destinations.map(
                   (e) {
                     NavigationDestination thisDestination =
@@ -106,7 +115,62 @@ class NinUiScaffold extends StatelessWidget {
                             ? NavigationRailLabelType.selected
                             : null,
               ),
-            Expanded(child: ContentCard(child: body)),
+            Expanded(
+                child: Column(
+              children: [
+                if (!isSmallScreen && appBar != null)
+                  AppBar(
+                    key: appBar!.key,
+                    leading: drawer != null && !isLargeScreen
+                        ? appBar!.leading
+                        : null,
+                    automaticallyImplyLeading: false,
+                    title: appBar!.title,
+                    actions: appBar!.actions,
+                    flexibleSpace: appBar!.flexibleSpace,
+                    bottom: appBar!.bottom,
+                    elevation: appBar!.elevation,
+                    scrolledUnderElevation: appBar!.scrolledUnderElevation,
+                    notificationPredicate: appBar!.notificationPredicate,
+                    shadowColor: appBar!.shadowColor,
+                    surfaceTintColor: appBar!.surfaceTintColor ?? bgColor,
+                    shape: appBar!.shape,
+                    backgroundColor: appBar!.backgroundColor ?? bgColor,
+                    foregroundColor: appBar!.foregroundColor,
+                    iconTheme: appBar!.iconTheme,
+                    actionsIconTheme: appBar!.actionsIconTheme,
+                    primary: appBar!.primary,
+                    centerTitle: appBar!.centerTitle,
+                    excludeHeaderSemantics: appBar!.excludeHeaderSemantics,
+                    titleSpacing: appBar!.titleSpacing,
+                    toolbarOpacity: appBar!.toolbarOpacity,
+                    bottomOpacity: appBar!.bottomOpacity,
+                    toolbarHeight: appBar!.toolbarHeight,
+                    leadingWidth: appBar!.leadingWidth,
+                    toolbarTextStyle: appBar!.toolbarTextStyle,
+                    titleTextStyle: appBar!.titleTextStyle,
+                    systemOverlayStyle: appBar!.systemOverlayStyle,
+                    forceMaterialTransparency:
+                        appBar!.forceMaterialTransparency,
+                    clipBehavior: appBar!.clipBehavior,
+                  ),
+                Expanded(child: BodyCard(child: body)),
+              ],
+            )),
+            if (isLargeScreen && drawer != null)
+              Drawer(
+                key: drawer!.key,
+                backgroundColor: drawer!.backgroundColor ?? bgColor,
+                elevation: drawer!.elevation ?? 0,
+                shadowColor: drawer!.shadowColor,
+                surfaceTintColor:
+                    drawer!.surfaceTintColor ?? Colors.transparent,
+                shape: drawer!.shape,
+                width: drawer!.width ?? 238,
+                semanticLabel: drawer!.semanticLabel,
+                clipBehavior: drawer!.clipBehavior,
+                child: drawer!.child,
+              ),
           ],
         ),
         floatingActionButton: floatingActionButton,
