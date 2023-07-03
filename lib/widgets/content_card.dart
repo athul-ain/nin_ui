@@ -6,8 +6,10 @@ class ContentCard extends StatelessWidget {
 
   /// Default margin is `EdgeInsets.only(left: 0.5, right: 0.5, top: 0, bottom: 3,)`
   final EdgeInsetsGeometry? margin;
+  final EdgeInsetsGeometry? padding;
 
-  const ContentCard({super.key, required this.child, this.color, this.margin});
+  const ContentCard(
+      {super.key, required this.child, this.color, this.margin, this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,10 @@ class ContentCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       elevation: 0,
       color: color,
-      child: child,
+      child: Padding(
+        padding: padding ?? EdgeInsets.all(0),
+        child: child,
+      ),
     );
   }
 }

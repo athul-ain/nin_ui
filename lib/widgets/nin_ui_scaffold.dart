@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nin_ui/nin_ui.dart';
+import 'package:nin_ui/widgets/page_loading_indicator.dart';
 
 class NinUiScaffold extends StatelessWidget {
   final Widget body;
@@ -8,6 +9,13 @@ class NinUiScaffold extends StatelessWidget {
   final Drawer? drawer;
   final Widget? floatingActionButton;
   final NavigationBar? navigationBar;
+  final bool? isPageLoading;
+
+  /// Responsible for determining where the [floatingActionButton] should go.
+  ///
+  /// If null, the [ScaffoldState] will use the default location, [FloatingActionButtonLocation.endFloat].
+  final FloatingActionButtonLocation? floatingActionButtonLocation;
+
   const NinUiScaffold({
     super.key,
     required this.body,
@@ -15,6 +23,8 @@ class NinUiScaffold extends StatelessWidget {
     this.drawer,
     this.floatingActionButton,
     this.navigationBar,
+    this.isPageLoading,
+    this.floatingActionButtonLocation,
   });
 
   @override
@@ -103,8 +113,9 @@ class NinUiScaffold extends StatelessWidget {
                 ).toList(),
                 selectedIndex: navigationBar!.selectedIndex,
                 onDestinationSelected: navigationBar!.onDestinationSelected,
-                labelType: navigationBar!.labelBehavior ==
-                        NavigationDestinationLabelBehavior.alwaysHide
+                labelType: (isLargeScreen && drawer == null) ||
+                        navigationBar!.labelBehavior ==
+                            NavigationDestinationLabelBehavior.alwaysHide
                     ? NavigationRailLabelType.none
                     : navigationBar!.labelBehavior ==
                             NavigationDestinationLabelBehavior.alwaysShow
@@ -154,7 +165,13 @@ class NinUiScaffold extends StatelessWidget {
                         appBar!.forceMaterialTransparency,
                     clipBehavior: appBar!.clipBehavior,
                   ),
-                Expanded(child: BodyCard(child: body)),
+                Expanded(
+                  child: BodyCard(
+                    child: isPageLoading == true
+                        ? const PageLoadingIndicator()
+                        : body,
+                  ),
+                ),
               ],
             )),
             if (isLargeScreen && drawer != null)
@@ -174,6 +191,7 @@ class NinUiScaffold extends StatelessWidget {
           ],
         ),
         floatingActionButton: floatingActionButton,
+        floatingActionButtonLocation: floatingActionButtonLocation,
         bottomNavigationBar: navigationBar != null && isSmallScreen
             ? NavigationBar(
                 key: navigationBar!.key,
