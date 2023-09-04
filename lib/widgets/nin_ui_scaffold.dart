@@ -10,6 +10,7 @@ class NinUiScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   final NavigationBar? navigationBar;
   final bool? isPageLoading;
+  final Widget? banner;
 
   /// Responsible for determining where the [floatingActionButton] should go.
   ///
@@ -25,6 +26,7 @@ class NinUiScaffold extends StatelessWidget {
     this.navigationBar,
     this.isPageLoading,
     this.floatingActionButtonLocation,
+    this.banner,
   });
 
   @override
@@ -132,10 +134,13 @@ class NinUiScaffold extends StatelessWidget {
                 if (!isSmallScreen && appBar != null)
                   AppBar(
                     key: appBar!.key,
-                    leading: drawer != null && !isLargeScreen
-                        ? appBar!.leading
+                    leading: !isLargeScreen
+                        ? drawer != null
+                            ? const SizedBox()
+                            : appBar!.leading
                         : null,
-                    automaticallyImplyLeading: false,
+                    automaticallyImplyLeading:
+                        appBar!.automaticallyImplyLeading,
                     title: appBar!.title,
                     actions: appBar!.actions,
                     flexibleSpace: appBar!.flexibleSpace,
@@ -166,10 +171,17 @@ class NinUiScaffold extends StatelessWidget {
                     clipBehavior: appBar!.clipBehavior,
                   ),
                 Expanded(
-                  child: BodyCard(
-                    child: isPageLoading == true
-                        ? const PageLoadingIndicator()
-                        : body,
+                  child: Column(
+                    children: [
+                      if (banner != null) banner!,
+                      Expanded(
+                        child: BodyCard(
+                          child: isPageLoading == true
+                              ? const PageLoadingIndicator()
+                              : body,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
@@ -201,6 +213,7 @@ class NinUiScaffold extends StatelessWidget {
                 backgroundColor: navigationBar!.backgroundColor ?? bgColor,
                 elevation: navigationBar!.elevation ?? 0,
                 labelBehavior: navigationBar!.labelBehavior,
+                height: navigationBar!.height,
               )
             : null,
       ),

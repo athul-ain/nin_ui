@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'content_card.dart';
 
 class ExpandedListTileCard extends StatefulWidget {
@@ -11,7 +10,9 @@ class ExpandedListTileCard extends StatefulWidget {
     this.trailing,
     this.children,
     this.contentPadding,
+    this.topContentPadding,
     this.automaticallyImplyTrailing,
+    this.topHorizontalTitleGap,
   });
   final Widget? leading;
   final Widget? title;
@@ -19,6 +20,8 @@ class ExpandedListTileCard extends StatefulWidget {
   final Widget? trailing;
   final List<Widget>? children;
   final EdgeInsetsGeometry? contentPadding;
+  final EdgeInsetsGeometry? topContentPadding;
+  final double? topHorizontalTitleGap;
   final bool? automaticallyImplyTrailing;
 
   @override
@@ -52,6 +55,9 @@ class _ExpandedListTileCardState extends State<ExpandedListTileCard> {
                         turns: isInsightsWidgetExpanded ? 0.5 : 0,
                         child: const Icon(Icons.expand_more_rounded),
                       ),
+              contentPadding: widget.topContentPadding ??
+                  const EdgeInsets.only(right: 8, left: 15),
+              horizontalTitleGap: widget.topHorizontalTitleGap ?? 15,
             ),
 
             // Content Widget
