@@ -43,6 +43,8 @@ class NinUiScaffold extends StatelessWidget {
     final bool isSmallScreen = MediaQuery.of(context).size.width < 500;
     final bool isLargeScreen = MediaQuery.of(context).size.width > 880;
 
+    final safePadding = MediaQuery.of(context).padding;
+
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -176,6 +178,33 @@ class NinUiScaffold extends StatelessWidget {
                       if (banner != null) banner!,
                       Expanded(
                         child: BodyCard(
+                          padding: isSmallScreen
+                              ? EdgeInsets.only(
+                                  bottom: safePadding.bottom > 3
+                                      ? safePadding.bottom
+                                      : 3,
+                                  left: safePadding.left > 5
+                                      ? safePadding.left
+                                      : 5,
+                                  right: safePadding.right > 5
+                                      ? safePadding.right
+                                      : 5,
+                                )
+                              : EdgeInsets.only(
+                                  bottom: safePadding.bottom > 8
+                                      ? safePadding.bottom
+                                      : 8,
+                                  left: navigationBar != null
+                                      ? 0
+                                      : safePadding.left > 18
+                                          ? safePadding.left + 3
+                                          : 18,
+                                  right: drawer != null
+                                      ? 0
+                                      : safePadding.right > 18
+                                          ? safePadding.right + 3
+                                          : 18,
+                                ),
                           child: isPageLoading == true
                               ? const PageLoadingIndicator()
                               : body,
