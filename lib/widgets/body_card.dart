@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 class BodyCard extends StatelessWidget {
   final Widget child;
   final Color? color;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
 
-  /// disableBottomMargin is not considered when padding is set to provide.
+  /// disableBottomMargin is not considered when margin is set to provide.
   final bool? disableBottomMargin;
   const BodyCard({
     super.key,
     required this.child,
     this.color,
     this.disableBottomMargin,
-    this.padding,
+    this.margin,
   });
 
   @override
@@ -28,7 +28,7 @@ class BodyCard extends StatelessWidget {
     bool isLargeScreen = mediaQuery.size.width > 700;
 
     return AnimatedPadding(
-      padding: padding ??
+      padding: margin ??
           (isLargeScreen
               ? EdgeInsets.only(
                   bottom: disableBottomMargin == true

@@ -41,7 +41,7 @@ class NinUiScaffold extends StatelessWidget {
         ? Brightness.light
         : Brightness.dark;
     final bool isSmallScreen = MediaQuery.of(context).size.width < 500;
-    final bool isLargeScreen = MediaQuery.of(context).size.width > 880;
+    final bool isLargeScreen = MediaQuery.of(context).size.width > 938;
 
     final safePadding = MediaQuery.of(context).padding;
 
@@ -60,7 +60,20 @@ class NinUiScaffold extends StatelessWidget {
                 leading: appBar!.leading,
                 automaticallyImplyLeading: appBar!.automaticallyImplyLeading,
                 title: appBar!.title,
-                actions: appBar!.actions,
+                actions: appBar?.actions == null
+                    ? null
+                    : appBar!.actions! +
+                        [
+                          SizedBox(
+                            width: isLargeScreen
+                                ? safePadding.right > 18
+                                    ? safePadding.right + 3
+                                    : 18
+                                : safePadding.right > 5
+                                    ? safePadding.right
+                                    : 5,
+                          )
+                        ],
                 flexibleSpace: appBar!.flexibleSpace,
                 bottom: appBar!.bottom,
                 elevation: appBar!.elevation,
@@ -144,7 +157,20 @@ class NinUiScaffold extends StatelessWidget {
                     automaticallyImplyLeading:
                         appBar!.automaticallyImplyLeading,
                     title: appBar!.title,
-                    actions: appBar!.actions,
+                    actions: appBar?.actions == null
+                        ? null
+                        : appBar!.actions! +
+                            [
+                              SizedBox(
+                                width: isLargeScreen
+                                    ? safePadding.right > 18
+                                        ? safePadding.right + 3
+                                        : 18
+                                    : safePadding.right > 5
+                                        ? safePadding.right
+                                        : 5,
+                              )
+                            ],
                     flexibleSpace: appBar!.flexibleSpace,
                     bottom: appBar!.bottom,
                     elevation: appBar!.elevation,
@@ -178,11 +204,13 @@ class NinUiScaffold extends StatelessWidget {
                       if (banner != null) banner!,
                       Expanded(
                         child: BodyCard(
-                          padding: isSmallScreen
+                          margin: isSmallScreen
                               ? EdgeInsets.only(
-                                  bottom: safePadding.bottom > 3
-                                      ? safePadding.bottom
-                                      : 3,
+                                  bottom: navigationBar != null
+                                      ? 0
+                                      : safePadding.bottom > 3
+                                          ? safePadding.bottom
+                                          : 3,
                                   left: safePadding.left > 5
                                       ? safePadding.left
                                       : 5,
@@ -199,7 +227,7 @@ class NinUiScaffold extends StatelessWidget {
                                       : safePadding.left > 18
                                           ? safePadding.left + 3
                                           : 18,
-                                  right: drawer != null
+                                  right: (drawer != null && isLargeScreen)
                                       ? 0
                                       : safePadding.right > 18
                                           ? safePadding.right + 3

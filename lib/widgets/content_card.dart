@@ -28,7 +28,7 @@ class ContentCard extends StatelessWidget {
       elevation: 0,
       color: color,
       child: Padding(
-        padding: padding ?? EdgeInsets.all(0),
+        padding: padding ?? const EdgeInsets.all(0),
         child: child,
       ),
     );
