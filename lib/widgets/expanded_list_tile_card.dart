@@ -13,6 +13,7 @@ class ExpandedListTileCard extends StatefulWidget {
     this.topContentPadding,
     this.automaticallyImplyTrailing,
     this.topHorizontalTitleGap,
+    this.color,
   });
   final Widget? leading;
   final Widget? title;
@@ -23,6 +24,7 @@ class ExpandedListTileCard extends StatefulWidget {
   final EdgeInsetsGeometry? topContentPadding;
   final double? topHorizontalTitleGap;
   final bool? automaticallyImplyTrailing;
+  final Color? color;
 
   @override
   State<ExpandedListTileCard> createState() => _ExpandedListTileCardState();
@@ -33,6 +35,7 @@ class _ExpandedListTileCardState extends State<ExpandedListTileCard> {
   @override
   Widget build(BuildContext context) {
     return ContentCard(
+      color: widget.color,
       child: AnimatedSize(
         duration: const Duration(milliseconds: 188),
         alignment: Alignment.topCenter,

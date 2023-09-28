@@ -60,20 +60,7 @@ class NinUiScaffold extends StatelessWidget {
                 leading: appBar!.leading,
                 automaticallyImplyLeading: appBar!.automaticallyImplyLeading,
                 title: appBar!.title,
-                actions: appBar?.actions == null
-                    ? null
-                    : appBar!.actions! +
-                        [
-                          SizedBox(
-                            width: isLargeScreen
-                                ? safePadding.right > 18
-                                    ? safePadding.right + 3
-                                    : 18
-                                : safePadding.right > 5
-                                    ? safePadding.right
-                                    : 5,
-                          )
-                        ],
+                actions: appBar?.actions,
                 flexibleSpace: appBar!.flexibleSpace,
                 bottom: appBar!.bottom,
                 elevation: appBar!.elevation,
@@ -157,20 +144,7 @@ class NinUiScaffold extends StatelessWidget {
                     automaticallyImplyLeading:
                         appBar!.automaticallyImplyLeading,
                     title: appBar!.title,
-                    actions: appBar?.actions == null
-                        ? null
-                        : appBar!.actions! +
-                            [
-                              SizedBox(
-                                width: isLargeScreen
-                                    ? safePadding.right > 18
-                                        ? safePadding.right + 3
-                                        : 18
-                                    : safePadding.right > 5
-                                        ? safePadding.right
-                                        : 5,
-                              )
-                            ],
+                    actions: appBar!.actions,
                     flexibleSpace: appBar!.flexibleSpace,
                     bottom: appBar!.bottom,
                     elevation: appBar!.elevation,
