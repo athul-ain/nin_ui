@@ -11,6 +11,7 @@ class NinUiScaffold extends StatelessWidget {
   final NavigationBar? navigationBar;
   final bool? isPageLoading;
   final Widget? banner;
+  final Color? backgroundColor;
 
   /// Responsible for determining where the [floatingActionButton] should go.
   ///
@@ -27,6 +28,7 @@ class NinUiScaffold extends StatelessWidget {
     this.isPageLoading,
     this.floatingActionButtonLocation,
     this.banner,
+    this.backgroundColor,
   });
 
   @override
@@ -49,11 +51,11 @@ class NinUiScaffold extends StatelessWidget {
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
         statusBarIconBrightness: iconBrightness,
-        systemNavigationBarColor: bgColor,
+        systemNavigationBarColor: backgroundColor ?? bgColor,
         systemNavigationBarIconBrightness: iconBrightness,
       ),
       child: Scaffold(
-        backgroundColor: bgColor,
+        backgroundColor: backgroundColor ?? bgColor,
         appBar: appBar != null && isSmallScreen
             ? AppBar(
                 key: appBar!.key,
@@ -67,9 +69,11 @@ class NinUiScaffold extends StatelessWidget {
                 scrolledUnderElevation: appBar!.scrolledUnderElevation,
                 notificationPredicate: appBar!.notificationPredicate,
                 shadowColor: appBar!.shadowColor,
-                surfaceTintColor: appBar!.surfaceTintColor ?? bgColor,
+                surfaceTintColor:
+                    appBar!.surfaceTintColor ?? backgroundColor ?? bgColor,
                 shape: appBar!.shape,
-                backgroundColor: appBar!.backgroundColor ?? bgColor,
+                backgroundColor:
+                    appBar!.backgroundColor ?? backgroundColor ?? bgColor,
                 foregroundColor: appBar!.foregroundColor,
                 iconTheme: appBar!.iconTheme,
                 actionsIconTheme: appBar!.actionsIconTheme,
@@ -96,7 +100,7 @@ class NinUiScaffold extends StatelessWidget {
                 useIndicator: true,
                 extended: (isLargeScreen && drawer == null) ? true : false,
                 minExtendedWidth: 158,
-                backgroundColor: bgColor,
+                backgroundColor: backgroundColor ?? bgColor,
                 leading: drawer != null && !isLargeScreen
                     ? const DrawerButton()
                     : appBar?.leading != null
@@ -151,9 +155,11 @@ class NinUiScaffold extends StatelessWidget {
                     scrolledUnderElevation: appBar!.scrolledUnderElevation,
                     notificationPredicate: appBar!.notificationPredicate,
                     shadowColor: appBar!.shadowColor,
-                    surfaceTintColor: appBar!.surfaceTintColor ?? bgColor,
+                    surfaceTintColor:
+                        appBar!.surfaceTintColor ?? backgroundColor ?? bgColor,
                     shape: appBar!.shape,
-                    backgroundColor: appBar!.backgroundColor ?? bgColor,
+                    backgroundColor:
+                        appBar!.backgroundColor ?? backgroundColor ?? bgColor,
                     foregroundColor: appBar!.foregroundColor,
                     iconTheme: appBar!.iconTheme,
                     actionsIconTheme: appBar!.actionsIconTheme,
@@ -220,7 +226,8 @@ class NinUiScaffold extends StatelessWidget {
             if (isLargeScreen && drawer != null)
               Drawer(
                 key: drawer!.key,
-                backgroundColor: drawer!.backgroundColor ?? bgColor,
+                backgroundColor:
+                    drawer!.backgroundColor ?? backgroundColor ?? bgColor,
                 elevation: drawer!.elevation ?? 0,
                 shadowColor: drawer!.shadowColor,
                 surfaceTintColor:
@@ -241,7 +248,9 @@ class NinUiScaffold extends StatelessWidget {
                 destinations: navigationBar!.destinations,
                 selectedIndex: navigationBar!.selectedIndex,
                 onDestinationSelected: navigationBar!.onDestinationSelected,
-                backgroundColor: navigationBar!.backgroundColor ?? bgColor,
+                backgroundColor: navigationBar!.backgroundColor ??
+                    backgroundColor ??
+                    bgColor,
                 elevation: navigationBar!.elevation ?? 0,
                 labelBehavior: navigationBar!.labelBehavior,
                 height: navigationBar!.height,
