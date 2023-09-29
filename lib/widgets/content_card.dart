@@ -14,6 +14,12 @@ class ContentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+
+    final oledBgColor = ElevationOverlay.colorWithOverlay(
+      theme.colorScheme.surface,
+      theme.colorScheme.onSurface,
+      3.8,
+    );
     return Card(
       margin: margin ??
           const EdgeInsets.only(
@@ -28,7 +34,7 @@ class ContentCard extends StatelessWidget {
       clipBehavior: Clip.antiAlias,
       elevation: 0,
       color: color ??
-          (theme.colorScheme.surface == Colors.black ? Colors.white10 : null),
+          (theme.colorScheme.surface == Colors.black ? oledBgColor : null),
       child: Padding(
         padding: padding ?? const EdgeInsets.all(0),
         child: child,

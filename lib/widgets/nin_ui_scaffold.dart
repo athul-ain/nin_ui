@@ -34,11 +34,13 @@ class NinUiScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bgColor = ElevationOverlay.colorWithOverlay(
-      theme.colorScheme.surface,
-      theme.colorScheme.onSurface,
-      1,
-    );
+    final bgColor = theme.colorScheme.surface == Colors.black
+        ? Colors.black
+        : ElevationOverlay.colorWithOverlay(
+            theme.colorScheme.surface,
+            theme.colorScheme.onSurface,
+            1,
+          );
     final iconBrightness = theme.brightness == Brightness.dark
         ? Brightness.light
         : Brightness.dark;

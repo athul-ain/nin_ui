@@ -18,11 +18,13 @@ class BodyCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final defaultBackgroundColor = ElevationOverlay.colorWithOverlay(
-      theme.colorScheme.surface,
-      theme.colorScheme.onSurface,
-      1,
-    );
+    final defaultBackgroundColor = theme.colorScheme.surface == Colors.black
+        ? Colors.black
+        : ElevationOverlay.colorWithOverlay(
+            theme.colorScheme.surface,
+            theme.colorScheme.onSurface,
+            1,
+          );
     final mediaQuery = MediaQuery.of(context);
 
     bool isLargeScreen = mediaQuery.size.width > 700;
