@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'content_card.dart';
+import 'dart:developer';
 
 class ExpandedListTileCard extends StatefulWidget {
   const ExpandedListTileCard({
@@ -14,6 +15,7 @@ class ExpandedListTileCard extends StatefulWidget {
     this.automaticallyImplyTrailing,
     this.topHorizontalTitleGap,
     this.color,
+    this.isExpanded,
   });
   final Widget? leading;
   final Widget? title;
@@ -25,6 +27,7 @@ class ExpandedListTileCard extends StatefulWidget {
   final double? topHorizontalTitleGap;
   final bool? automaticallyImplyTrailing;
   final Color? color;
+  final bool? isExpanded;
 
   @override
   State<ExpandedListTileCard> createState() => _ExpandedListTileCardState();
@@ -32,8 +35,20 @@ class ExpandedListTileCard extends StatefulWidget {
 
 class _ExpandedListTileCardState extends State<ExpandedListTileCard> {
   bool isInsightsWidgetExpanded = false;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
+      setState(() {
+        isInsightsWidgetExpanded = widget.isExpanded ?? false;
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    log(isInsightsWidgetExpanded.toString());
     return ContentCard(
       color: widget.color,
       child: AnimatedSize(
