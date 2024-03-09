@@ -16,6 +16,7 @@ class NinUiScaffold extends StatelessWidget {
   final Widget? banner;
   final Color? backgroundColor;
   final Map<ShortcutActivator, VoidCallback>? callbackShortcutBindings;
+  final Key? scaffoldKey;
 
   /// Responsible for determining where the [floatingActionButton] should go.
   ///
@@ -34,6 +35,7 @@ class NinUiScaffold extends StatelessWidget {
     this.banner,
     this.backgroundColor,
     this.callbackShortcutBindings,
+    this.scaffoldKey,
   });
 
   @override
@@ -70,6 +72,7 @@ class NinUiScaffold extends StatelessWidget {
           );
         },
         child: Scaffold(
+          key: scaffoldKey,
           backgroundColor: backgroundColor ?? bgColor,
           appBar: appBar != null && isSmallScreen
               ? AppBar(
@@ -157,7 +160,7 @@ class NinUiScaffold extends StatelessWidget {
                       key: appBar!.key,
                       leading: !isLargeScreen
                           ? drawer != null
-                              ? const SizedBox()
+                              ? null
                               : appBar!.leading
                           : null,
                       automaticallyImplyLeading:
