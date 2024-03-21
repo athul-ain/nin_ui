@@ -8,14 +8,17 @@ class ContentCard extends StatelessWidget {
   final EdgeInsetsGeometry? margin;
   final EdgeInsetsGeometry? padding;
   final void Function()? onTap;
+  final double? borderRadius;
 
-  const ContentCard(
-      {super.key,
-      required this.child,
-      this.color,
-      this.margin,
-      this.padding,
-      this.onTap});
+  const ContentCard({
+    super.key,
+    required this.child,
+    this.color,
+    this.margin,
+    this.padding,
+    this.onTap,
+    this.borderRadius,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +38,7 @@ class ContentCard extends StatelessWidget {
             bottom: 5,
           ),
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(13),
+        borderRadius: BorderRadius.circular(borderRadius ?? 13),
       ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,
