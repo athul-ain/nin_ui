@@ -151,6 +151,21 @@ class NinUiScaffold extends StatelessWidget {
                                       .onlyShowSelected
                               ? NavigationRailLabelType.selected
                               : null,
+                )
+              else if (!isSmallScreen && drawer != null)
+                Drawer(
+                  key: drawer!.key,
+                  backgroundColor:
+                      drawer!.backgroundColor ?? backgroundColor ?? bgColor,
+                  elevation: drawer!.elevation ?? 0,
+                  shadowColor: drawer!.shadowColor,
+                  surfaceTintColor:
+                      drawer!.surfaceTintColor ?? Colors.transparent,
+                  shape: drawer!.shape,
+                  width: drawer!.width ?? 238,
+                  semanticLabel: drawer!.semanticLabel,
+                  clipBehavior: drawer!.clipBehavior,
+                  child: drawer!.child,
                 ),
               Expanded(
                   child: Column(
@@ -242,7 +257,7 @@ class NinUiScaffold extends StatelessWidget {
                   ),
                 ],
               )),
-              if (isLargeScreen && drawer != null)
+              if (isLargeScreen && drawer != null && navigationBar != null)
                 Drawer(
                   key: drawer!.key,
                   backgroundColor:
