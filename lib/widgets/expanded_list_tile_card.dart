@@ -39,7 +39,7 @@ class _ExpandedListTileCardState extends State<ExpandedListTileCard> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       setState(() {
         isInsightsWidgetExpanded = widget.isExpanded ?? false;
       });
