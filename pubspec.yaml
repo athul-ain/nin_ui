@@ -11,8 +11,8 @@ dependencies:
   flutter:
     sdk: flutter
     
-  connectivity_plus: ^5.0.2
-  device_info_plus: ^9.0.2
+  connectivity_plus: ^6.0.3
+  device_info_plus: ^10.1.0
 
 dev_dependencies:
   flutter_test:
