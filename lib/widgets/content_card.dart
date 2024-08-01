@@ -5,8 +5,8 @@ class ContentCard extends StatelessWidget {
   final Color? color;
 
   /// Default margin is `EdgeInsets.only(left: 0.5, right: 0.5, top: 0, bottom: 3,)`
-  final EdgeInsetsGeometry? margin;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry margin;
+  final EdgeInsetsGeometry padding;
   final void Function()? onTap;
   final double? borderRadius;
 
@@ -14,8 +14,9 @@ class ContentCard extends StatelessWidget {
     super.key,
     required this.child,
     this.color,
-    this.margin,
-    this.padding,
+    this.margin =
+        const EdgeInsets.only(left: 0.5, right: 0.5, top: 0, bottom: 5),
+    this.padding = const EdgeInsets.all(0),
     this.onTap,
     this.borderRadius,
   });
@@ -30,13 +31,7 @@ class ContentCard extends StatelessWidget {
       3.8,
     );
     return Card(
-      margin: margin ??
-          const EdgeInsets.only(
-            left: 0.5,
-            right: 0.5,
-            top: 0,
-            bottom: 5,
-          ),
+      margin: margin,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(borderRadius ?? 13),
       ),
@@ -47,7 +42,7 @@ class ContentCard extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: padding ?? const EdgeInsets.all(0),
+          padding: padding,
           child: child,
         ),
       ),
