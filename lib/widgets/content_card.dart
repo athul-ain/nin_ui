@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nin_ui/utils/color.dart';
 
 class ContentCard extends StatelessWidget {
   final Widget child;
@@ -23,13 +24,7 @@ class ContentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
-    final oledBgColor = ElevationOverlay.colorWithOverlay(
-      theme.colorScheme.surface,
-      theme.colorScheme.onSurface,
-      3.8,
-    );
+    final cardColor = color ?? getContentColor(Theme.of(context).colorScheme);
     return Card(
       margin: margin,
       shape: RoundedRectangleBorder(
@@ -37,8 +32,7 @@ class ContentCard extends StatelessWidget {
       ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,
-      color: color ??
-          (theme.colorScheme.surface == Colors.black ? oledBgColor : null),
+      color: cardColor,
       child: InkWell(
         onTap: onTap,
         child: Padding(

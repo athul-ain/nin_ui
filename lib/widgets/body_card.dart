@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/color.dart';
+
 class BodyCard extends StatelessWidget {
   final Widget child;
   final Color? color;
@@ -17,14 +19,7 @@ class BodyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final defaultBackgroundColor = theme.colorScheme.surface == Colors.black
-        ? Colors.black
-        : ElevationOverlay.colorWithOverlay(
-            theme.colorScheme.surface,
-            theme.colorScheme.onSurface,
-            1,
-          );
+    final bgColor = getBackgroundColor(context);
     final mediaQuery = MediaQuery.of(context);
 
     bool isLargeScreen = mediaQuery.size.width > 700;
@@ -51,7 +46,7 @@ class BodyCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         elevation: 0,
         margin: const EdgeInsets.all(0),
-        color: color ?? defaultBackgroundColor,
+        color: color ?? bgColor,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
         ),

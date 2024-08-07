@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nin_ui/nin_ui.dart';
+import 'package:nin_ui/utils/color.dart';
 import 'package:nin_ui/widgets/conditional_parent.dart';
 import 'package:nin_ui/widgets/page_loading_indicator.dart';
 
@@ -39,13 +40,8 @@ class NinUiScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bgColor = theme.colorScheme.surface == Colors.black
-        ? Colors.black
-        : ElevationOverlay.colorWithOverlay(
-            theme.colorScheme.surface,
-            theme.colorScheme.onSurface,
-            1,
-          );
+    final bgColor = getBackgroundColor(context);
+
     final iconBrightness = theme.brightness == Brightness.dark
         ? Brightness.light
         : Brightness.dark;
