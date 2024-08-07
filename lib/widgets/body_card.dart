@@ -19,7 +19,8 @@ class BodyCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = getBackgroundColor(context);
+    final colorScheme = Theme.of(context).colorScheme;
+    final bgColor = getBackgroundColor(colorScheme);
     final mediaQuery = MediaQuery.of(context);
 
     bool isLargeScreen = mediaQuery.size.width > 700;

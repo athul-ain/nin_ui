@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-Color getBackgroundColor(BuildContext context) {
-  final colorScheme = Theme.of(context).colorScheme;
+Color getBackgroundColor(ColorScheme colorScheme) {
   final bgColor = colorScheme.surface == Colors.black
       ? Colors.black
       : ElevationOverlay.colorWithOverlay(

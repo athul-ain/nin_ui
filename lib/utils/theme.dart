@@ -29,6 +29,10 @@ ThemeData ninUiThemeData({
         minHeight: 53,
       ),
     ),
+    appBarTheme: AppBarTheme(
+      backgroundColor: getBackgroundColor(colorSchemeGen),
+      foregroundColor: colorSchemeGen.onSurface,
+    ),
   );
 }
 

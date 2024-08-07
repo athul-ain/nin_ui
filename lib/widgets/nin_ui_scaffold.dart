@@ -40,7 +40,7 @@ class NinUiScaffold extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final bgColor = getBackgroundColor(context);
+    final bgColor = getBackgroundColor(theme.colorScheme);
 
     final iconBrightness = theme.brightness == Brightness.dark
         ? Brightness.light
