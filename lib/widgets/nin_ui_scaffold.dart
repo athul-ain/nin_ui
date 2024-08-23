@@ -12,6 +12,7 @@ class NinUiScaffold extends StatelessWidget {
   final Widget? floatingActionButton;
   final NavigationBar? navigationBar;
   final bool? isPageLoading;
+  final Widget? loadingBody;
   final Widget? banner;
   final Color? backgroundColor;
   final Map<ShortcutActivator, VoidCallback>? callbackShortcutBindings;
@@ -30,6 +31,7 @@ class NinUiScaffold extends StatelessWidget {
     this.floatingActionButton,
     this.navigationBar,
     this.isPageLoading,
+    this.loadingBody,
     this.floatingActionButtonLocation,
     this.banner,
     this.backgroundColor,
@@ -242,7 +244,7 @@ class NinUiScaffold extends StatelessWidget {
                                             : 18,
                                   ),
                             child: isPageLoading == true
-                                ? const PageLoadingIndicator()
+                                ? loadingBody ?? const PageLoadingIndicator()
                                 : body,
                           ),
                         ),
