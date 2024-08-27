@@ -41,6 +41,13 @@ ThemeData ninUiThemeData({
         visualDensity: VisualDensity.standard,
       ),
     ),
+    textButtonTheme: TextButtonThemeData(
+      style: TextButton.styleFrom(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+      ),
+    ),
   );
 }
 
