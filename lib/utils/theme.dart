@@ -25,7 +25,7 @@ ThemeData ninUiThemeData({
     searchBarTheme: SearchBarThemeData(
       backgroundColor:
           WidgetStatePropertyAll(getBackgroundColor(colorSchemeGen)),
-      elevation: WidgetStatePropertyAll(0),
+      elevation: const WidgetStatePropertyAll(0),
       constraints: const BoxConstraints(
         maxHeight: 53,
         minHeight: 53,
@@ -35,7 +35,12 @@ ThemeData ninUiThemeData({
       backgroundColor: getBackgroundColor(colorSchemeGen),
       foregroundColor: colorSchemeGen.onSurface,
     ),
-    inputDecorationTheme: InputDecorationTheme(filled: true),
+    inputDecorationTheme: const InputDecorationTheme(filled: true),
+    iconButtonTheme: IconButtonThemeData(
+      style: IconButton.styleFrom(
+        visualDensity: VisualDensity.standard,
+      ),
+    ),
   );
 }
 
