@@ -15,6 +15,7 @@ ThemeData ninUiThemeData({
 
   return ThemeData(
     visualDensity: VisualDensity.standard,
+    materialTapTargetSize: MaterialTapTargetSize.padded,
     colorScheme: colorSchemeGen,
     useMaterial3: true,
     pageTransitionsTheme: const PageTransitionsTheme(
@@ -36,11 +37,6 @@ ThemeData ninUiThemeData({
       foregroundColor: colorSchemeGen.onSurface,
     ),
     inputDecorationTheme: const InputDecorationTheme(filled: true),
-    iconButtonTheme: IconButtonThemeData(
-      style: IconButton.styleFrom(
-        visualDensity: VisualDensity.standard,
-      ),
-    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(

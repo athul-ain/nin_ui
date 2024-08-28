@@ -226,16 +226,12 @@ class NinUiScaffold extends StatelessWidget {
                                       bottom: safePadding.bottom > 8
                                           ? safePadding.bottom
                                           : 8,
-                                      left: navigationBar != null
-                                          ? 0
-                                          : safePadding.left > 18
-                                              ? safePadding.left + 3
-                                              : 18,
-                                      right: (drawer != null && largeScreen)
-                                          ? 0
-                                          : safePadding.right > 18
-                                              ? safePadding.right + 3
-                                              : 18,
+                                      left: safePadding.left > 18
+                                          ? safePadding.left + 3
+                                          : 18,
+                                      right: safePadding.right > 18
+                                          ? safePadding.right + 3
+                                          : 18,
                                     ),
                               child: isPageLoading == true
                                   ? loadingBody ?? const PageLoadingIndicator()
@@ -248,24 +244,11 @@ class NinUiScaffold extends StatelessWidget {
                   ],
                 ),
               ),
-              // if (isLargeScreen && drawer != null && navigationBar != null)
-              //   Drawer(
-              //     key: drawer!.key,
-              //     backgroundColor:
-              //         drawer!.backgroundColor ?? backgroundColor ?? bgColor,
-              //     elevation: drawer!.elevation ?? 0,
-              //     shadowColor: drawer!.shadowColor,
-              //     surfaceTintColor:
-              //         drawer!.surfaceTintColor ?? Colors.transparent,
-              //     shape: drawer!.shape,
-              //     width: drawer!.width ?? 238,
-              //     semanticLabel: drawer!.semanticLabel,
-              //     clipBehavior: drawer!.clipBehavior,
-              //     child: drawer!.child,
-              //   ),
             ],
           ),
-          floatingActionButton: floatingActionButton,
+          floatingActionButton: (navigationBar != null && !smallScreen)
+              ? null
+              : floatingActionButton,
           floatingActionButtonLocation: floatingActionButtonLocation,
           bottomNavigationBar: navigationBar != null && smallScreen
               ? NavigationBar(

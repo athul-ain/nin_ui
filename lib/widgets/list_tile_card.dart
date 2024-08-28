@@ -7,6 +7,8 @@ class ListTileCard extends StatelessWidget {
   final Widget? subtitle;
   final Widget? trailing;
   final Color? color;
+  final Color? iconColor;
+  final Color? textColor;
 
   /// Called when the user taps this list tile.
   ///
@@ -39,6 +41,8 @@ class ListTileCard extends StatelessWidget {
     this.contentPadding,
     this.horizontalTitleGap,
     this.color,
+    this.iconColor,
+    this.textColor,
   });
 
   @override
@@ -46,6 +50,8 @@ class ListTileCard extends StatelessWidget {
     return ContentCard(
       color: color,
       child: ListTile(
+        iconColor: iconColor,
+        textColor: textColor,
         leading: leading,
         title: title,
         subtitle: subtitle,
