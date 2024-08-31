@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:bitsdojo_window/bitsdojo_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nin_ui/nin_ui.dart';
@@ -5,6 +8,8 @@ import 'package:nin_ui/utils/color.dart';
 import 'package:nin_ui/utils/size.dart';
 import 'package:nin_ui/widgets/conditional_parent.dart';
 import 'package:nin_ui/widgets/page_loading_indicator.dart';
+
+import 'windows_buttons.dart';
 
 class NinUiScaffold extends StatelessWidget {
   final Widget body;
@@ -16,8 +21,8 @@ class NinUiScaffold extends StatelessWidget {
   final Widget? loadingBody;
   final Widget? banner;
   final Color? backgroundColor;
-  final Map<ShortcutActivator, VoidCallback>? callbackShortcutBindings;
   final Key? scaffoldKey;
+  final String? desktopTitle;
 
   /// Responsible for determining where the [floatingActionButton] should go.
   ///
@@ -36,8 +41,8 @@ class NinUiScaffold extends StatelessWidget {
     this.floatingActionButtonLocation,
     this.banner,
     this.backgroundColor,
-    this.callbackShortcutBindings,
     this.scaffoldKey,
+    this.desktopTitle,
   });
 
   @override
@@ -61,11 +66,34 @@ class NinUiScaffold extends StatelessWidget {
         systemNavigationBarIconBrightness: iconBrightness,
       ),
       child: ConditionalParentWidget(
-        enableParent: callbackShortcutBindings != null,
+        enableParent: Platform.isWindows,
         builder: (child) {
-          return CallbackShortcuts(
-            bindings: callbackShortcutBindings!,
-            child: child,
+          return Container(
+            color: backgroundColor ?? bgColor,
+            child: Column(
+              children: [
+                WindowTitleBarBox(
+                  child: Row(
+                    children: [
+                      if (desktopTitle != null)
+                        Material(
+                          color: Colors.transparent,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 16),
+                            child: Text(
+                              desktopTitle ?? '',
+                              style: theme.textTheme.labelMedium,
+                            ),
+                          ),
+                        ),
+                      Expanded(child: MoveWindow()),
+                      const WindowButtons(),
+                    ],
+                  ),
+                ),
+                Expanded(child: child),
+              ],
+            ),
           );
         },
         child: Scaffold(
@@ -77,7 +105,15 @@ class NinUiScaffold extends StatelessWidget {
                   leading: appBar!.leading,
                   automaticallyImplyLeading: appBar!.automaticallyImplyLeading,
                   title: appBar!.title,
-                  actions: appBar?.actions,
+                  actions: appBar!.actions == null
+                      ? null
+                      : [
+                          ...appBar!.actions!,
+                          SizedBox(
+                            width:
+                                safePadding.right > 5 ? safePadding.right : 5,
+                          )
+                        ],
                   flexibleSpace: appBar!.flexibleSpace,
                   bottom: appBar!.bottom,
                   elevation: appBar!.elevation,
@@ -110,10 +146,14 @@ class NinUiScaffold extends StatelessWidget {
           drawer: drawer != null && !largeScreen ? drawer : null,
           body: Row(
             children: [
-              if (!smallScreen && !largeScreen && navigationBar != null)
+              if (!smallScreen &&
+                  (!largeScreen || drawer == null) &&
+                  navigationBar != null)
                 NavigationRail(
                   useIndicator: true,
-                  extended: (largeScreen && drawer == null) ? true : false,
+                  extended:
+                      //  (largeScreen && drawer == null) ? true :
+                      false,
                   minExtendedWidth: 158,
                   backgroundColor: backgroundColor ?? bgColor,
                   groupAlignment: -0.95,
@@ -170,7 +210,16 @@ class NinUiScaffold extends StatelessWidget {
                         automaticallyImplyLeading:
                             appBar!.automaticallyImplyLeading,
                         title: appBar!.title,
-                        actions: appBar!.actions,
+                        actions: appBar!.actions == null
+                            ? null
+                            : [
+                                ...appBar!.actions!,
+                                SizedBox(
+                                  width: safePadding.right > 18
+                                      ? safePadding.right + 3
+                                      : 18,
+                                )
+                              ],
                         flexibleSpace: appBar!.flexibleSpace,
                         bottom: appBar!.bottom,
                         elevation: appBar!.elevation,
