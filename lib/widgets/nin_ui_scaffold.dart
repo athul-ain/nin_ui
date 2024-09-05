@@ -66,7 +66,7 @@ class NinUiScaffold extends StatelessWidget {
         systemNavigationBarIconBrightness: iconBrightness,
       ),
       child: ConditionalParentWidget(
-        enableParent: Platform.isWindows,
+        enableParent: Platform.isWindows || Platform.isMacOS,
         builder: (child) {
           return Container(
             color: backgroundColor ?? bgColor,
@@ -75,6 +75,7 @@ class NinUiScaffold extends StatelessWidget {
                 WindowTitleBarBox(
                   child: Row(
                     children: [
+                      if (Platform.isMacOS) const SizedBox(width: 58),
                       if (desktopTitle != null)
                         Material(
                           color: Colors.transparent,
