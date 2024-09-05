@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:bitsdojo_window/bitsdojo_window.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:nin_ui/nin_ui.dart';
@@ -66,7 +67,9 @@ class NinUiScaffold extends StatelessWidget {
         systemNavigationBarIconBrightness: iconBrightness,
       ),
       child: ConditionalParentWidget(
-        enableParent: Platform.isWindows || Platform.isMacOS,
+        enableParent: kIsWeb
+            ? false
+            : (Platform.isWindows || Platform.isMacOS || Platform.isLinux),
         builder: (child) {
           return Container(
             color: backgroundColor ?? bgColor,
