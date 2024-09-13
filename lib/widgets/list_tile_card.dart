@@ -29,6 +29,7 @@ class ListTileCard extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
 
   final double? horizontalTitleGap;
+  final bool dense;
 
   const ListTileCard({
     super.key,
@@ -43,6 +44,7 @@ class ListTileCard extends StatelessWidget {
     this.color,
     this.iconColor,
     this.textColor,
+    this.dense = false,
   });
 
   @override
@@ -50,6 +52,7 @@ class ListTileCard extends StatelessWidget {
     return ContentCard(
       color: color,
       child: ListTile(
+        dense: dense,
         iconColor: iconColor,
         textColor: textColor,
         leading: leading,
