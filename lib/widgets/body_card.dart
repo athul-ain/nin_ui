@@ -21,9 +21,10 @@ class BodyCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final bgColor = getBackgroundColor(colorScheme);
-    final mediaQuery = MediaQuery.of(context);
+    final size = MediaQuery.sizeOf(context);
+    final safePadding = MediaQuery.paddingOf(context);
 
-    bool isLargeScreen = mediaQuery.size.width > 700;
+    bool isLargeScreen = size.width > 700;
 
     return AnimatedPadding(
       padding: margin ??
@@ -31,16 +32,16 @@ class BodyCard extends StatelessWidget {
               ? EdgeInsets.only(
                   bottom: disableBottomMargin == true
                       ? 0
-                      : (mediaQuery.padding.bottom + 8),
-                  left: mediaQuery.padding.left + 18,
-                  right: mediaQuery.padding.right + 18,
+                      : (safePadding.bottom + 8),
+                  left: safePadding.left + 18,
+                  right: safePadding.right + 18,
                 )
               : EdgeInsets.only(
                   bottom: disableBottomMargin == true
                       ? 0
-                      : (mediaQuery.padding.bottom + 3),
-                  left: mediaQuery.padding.left + 5,
-                  right: mediaQuery.padding.right + 5,
+                      : (safePadding.bottom + 3),
+                  left: safePadding.left + 5,
+                  right: safePadding.right + 5,
                 )),
       duration: const Duration(milliseconds: 333),
       child: Card(

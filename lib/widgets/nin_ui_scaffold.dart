@@ -57,7 +57,7 @@ class NinUiScaffold extends StatelessWidget {
     final bool smallScreen = isSmallScreen(context);
     final bool largeScreen = isLargeScreen(context);
 
-    final safePadding = MediaQuery.of(context).padding;
+    final safePadding = MediaQuery.paddingOf(context);
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
