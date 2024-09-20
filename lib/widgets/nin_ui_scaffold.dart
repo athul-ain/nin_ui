@@ -84,9 +84,12 @@ class NinUiScaffold extends StatelessWidget {
                           color: Colors.transparent,
                           child: Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 16),
-                            child: Text(
-                              desktopTitle ?? '',
-                              style: theme.textTheme.labelMedium,
+                            child: Hero(
+                              tag: "desktopTitle",
+                              child: Text(
+                                desktopTitle ?? '',
+                                style: theme.textTheme.labelMedium,
+                              ),
                             ),
                           ),
                         ),
