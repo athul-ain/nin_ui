@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:nin_ui/nin_ui.dart';
 
+enum TileListPosition {
+  top,
+  middle,
+  bottom,
+  single,
+}
+
 class ListTileCard extends StatelessWidget {
   final Widget? title;
   final Widget? leading;
@@ -9,6 +16,7 @@ class ListTileCard extends StatelessWidget {
   final Color? color;
   final Color? iconColor;
   final Color? textColor;
+  final TileListPosition? position;
 
   /// Called when the user taps this list tile.
   ///
@@ -30,6 +38,7 @@ class ListTileCard extends StatelessWidget {
 
   final double? horizontalTitleGap;
   final bool dense;
+  final BorderRadiusGeometry? borderRadius;
 
   const ListTileCard({
     super.key,
@@ -45,12 +54,45 @@ class ListTileCard extends StatelessWidget {
     this.iconColor,
     this.textColor,
     this.dense = false,
+    this.borderRadius,
+    this.position = TileListPosition.single,
   });
 
   @override
   Widget build(BuildContext context) {
     return ContentCard(
       color: color,
+      borderRadius: borderRadius ??
+          (position == TileListPosition.single
+              ? BorderRadius.circular(13)
+              : position == TileListPosition.top
+                  ? BorderRadius.only(
+                      topLeft: Radius.circular(13),
+                      topRight: Radius.circular(13),
+                      bottomLeft: Radius.circular(3),
+                      bottomRight: Radius.circular(3),
+                    )
+                  : position == TileListPosition.bottom
+                      ? BorderRadius.only(
+                          bottomLeft: Radius.circular(13),
+                          bottomRight: Radius.circular(13),
+                          topLeft: Radius.circular(3),
+                          topRight: Radius.circular(3),
+                        )
+                      : BorderRadius.only(
+                          bottomLeft: Radius.circular(3),
+                          bottomRight: Radius.circular(3),
+                          topLeft: Radius.circular(3),
+                          topRight: Radius.circular(3),
+                        )),
+      margin: EdgeInsets.only(
+          left: 0.5,
+          right: 0.5,
+          top: 0,
+          bottom:
+              [TileListPosition.middle, TileListPosition.top].contains(position)
+                  ? 3
+                  : 5),
       child: ListTile(
         dense: dense,
         iconColor: iconColor,

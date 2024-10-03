@@ -9,7 +9,7 @@ class ContentCard extends StatelessWidget {
   final EdgeInsetsGeometry margin;
   final EdgeInsetsGeometry padding;
   final void Function()? onTap;
-  final double? borderRadius;
+  final BorderRadiusGeometry? borderRadius;
 
   const ContentCard({
     super.key,
@@ -28,7 +28,7 @@ class ContentCard extends StatelessWidget {
     return Card(
       margin: margin,
       shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(borderRadius ?? 13),
+        borderRadius: borderRadius ?? BorderRadius.circular(13),
       ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,
