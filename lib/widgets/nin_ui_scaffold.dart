@@ -24,6 +24,7 @@ class NinUiScaffold extends StatelessWidget {
   final Color? backgroundColor;
   final Key? scaffoldKey;
   final String? desktopTitle;
+  final bool extendBodyBehindAppBar;
 
   /// Responsible for determining where the [floatingActionButton] should go.
   ///
@@ -44,6 +45,7 @@ class NinUiScaffold extends StatelessWidget {
     this.backgroundColor,
     this.scaffoldKey,
     this.desktopTitle,
+    this.extendBodyBehindAppBar = false,
   });
 
   @override
@@ -106,6 +108,7 @@ class NinUiScaffold extends StatelessWidget {
         child: Scaffold(
           key: scaffoldKey,
           backgroundColor: backgroundColor ?? bgColor,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
           appBar: appBar != null && smallScreen
               ? AppBar(
                   key: appBar!.key,
@@ -266,6 +269,11 @@ class NinUiScaffold extends StatelessWidget {
                             child: BodyCard(
                               margin: smallScreen
                                   ? EdgeInsets.only(
+                                      top: extendBodyBehindAppBar
+                                          ? safePadding.top > 3
+                                              ? safePadding.top
+                                              : 3
+                                          : 0,
                                       bottom: navigationBar != null
                                           ? 0
                                           : safePadding.bottom > 3
@@ -279,6 +287,11 @@ class NinUiScaffold extends StatelessWidget {
                                           : 5,
                                     )
                                   : EdgeInsets.only(
+                                      top: extendBodyBehindAppBar
+                                          ? safePadding.top > 8
+                                              ? safePadding.top
+                                              : 8
+                                          : 0,
                                       bottom: safePadding.bottom > 8
                                           ? safePadding.bottom
                                           : 8,
