@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-
 import 'color.dart';
 
 ThemeData ninUiThemeData({
   required Color primaryColor,
   required Brightness brightness,
   ColorScheme? colorScheme,
+  bool isOneUi = false,
 }) {
   final ColorScheme colorSchemeGen = colorScheme ??
       ColorScheme.fromSeed(
@@ -33,6 +33,7 @@ ThemeData ninUiThemeData({
       ),
     ),
     appBarTheme: AppBarTheme(
+      titleSpacing: isOneUi ? 0 : null,
       backgroundColor: getBackgroundColor(colorSchemeGen),
       foregroundColor: colorSchemeGen.onSurface,
     ),
@@ -44,6 +45,13 @@ ThemeData ninUiThemeData({
         ),
       ),
     ),
+    actionIconTheme: isOneUi
+        ? ActionIconThemeData(
+            backButtonIconBuilder: (context) {
+              return const Icon(Icons.arrow_back_ios_new_rounded);
+            },
+          )
+        : null,
   );
 }
 
@@ -52,11 +60,13 @@ extension ThemeDataExtension on ThemeData {
     required Color primaryColor,
     required Brightness brightness,
     ColorScheme? colorScheme,
+    bool isOneUi = false,
   }) {
     return ninUiThemeData(
       primaryColor: primaryColor,
       brightness: brightness,
       colorScheme: colorScheme,
+      isOneUi: isOneUi,
     );
   }
 }
