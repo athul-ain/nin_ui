@@ -8,7 +8,7 @@ enum TileListPosition {
   single,
 }
 
-class ListTileCard extends StatelessWidget {
+class ListTileCard extends StatefulWidget {
   final Widget? title;
   final Widget? leading;
   final Widget? subtitle;
@@ -59,27 +59,45 @@ class ListTileCard extends StatelessWidget {
   });
 
   @override
+  State<ListTileCard> createState() => _ListTileCardState();
+}
+
+class _ListTileCardState extends State<ListTileCard> {
+  double _scale = 1.0;
+  void _onTapDown(TapDownDetails details) {
+    setState(() => _scale = 0.99);
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() => _scale = 1.0);
+  }
+
+  void _onTapCancel() {
+    setState(() => _scale = 1.0);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return ContentCard(
-      color: color,
-      borderRadius: borderRadius ??
-          (position == TileListPosition.single
+      color: widget.color,
+      borderRadius: widget.borderRadius ??
+          (widget.position == TileListPosition.single
               ? BorderRadius.circular(13)
-              : position == TileListPosition.top
-                  ? BorderRadius.only(
+              : widget.position == TileListPosition.top
+                  ? const BorderRadius.only(
                       topLeft: Radius.circular(13),
                       topRight: Radius.circular(13),
                       bottomLeft: Radius.circular(3),
                       bottomRight: Radius.circular(3),
                     )
-                  : position == TileListPosition.bottom
-                      ? BorderRadius.only(
+                  : widget.position == TileListPosition.bottom
+                      ? const BorderRadius.only(
                           bottomLeft: Radius.circular(13),
                           bottomRight: Radius.circular(13),
                           topLeft: Radius.circular(3),
                           topRight: Radius.circular(3),
                         )
-                      : BorderRadius.only(
+                      : const BorderRadius.only(
                           bottomLeft: Radius.circular(3),
                           bottomRight: Radius.circular(3),
                           topLeft: Radius.circular(3),
@@ -89,23 +107,32 @@ class ListTileCard extends StatelessWidget {
           left: 0.5,
           right: 0.5,
           top: 0,
-          bottom:
-              [TileListPosition.middle, TileListPosition.top].contains(position)
-                  ? 3
-                  : 5),
-      child: ListTile(
-        dense: dense,
-        iconColor: iconColor,
-        textColor: textColor,
-        leading: leading,
-        title: title,
-        subtitle: subtitle,
-        trailing: trailing,
-        onTap: onTap,
-        onLongPress: onLongPress,
-        contentPadding:
-            contentPadding ?? const EdgeInsets.only(right: 8, left: 15),
-        horizontalTitleGap: horizontalTitleGap ?? 15,
+          bottom: [TileListPosition.middle, TileListPosition.top]
+                  .contains(widget.position)
+              ? 3
+              : 5),
+      child: GestureDetector(
+        onTapDown: _onTapDown,
+        onTapUp: _onTapUp,
+        onTapCancel: _onTapCancel,
+        child: AnimatedScale(
+          scale: _scale,
+          duration: Durations.short3,
+          child: ListTile(
+            dense: widget.dense,
+            iconColor: widget.iconColor,
+            textColor: widget.textColor,
+            leading: widget.leading,
+            title: widget.title,
+            subtitle: widget.subtitle,
+            trailing: widget.trailing,
+            onTap: widget.onTap,
+            onLongPress: widget.onLongPress,
+            contentPadding: widget.contentPadding ??
+                const EdgeInsets.only(right: 8, left: 15),
+            horizontalTitleGap: widget.horizontalTitleGap ?? 15,
+          ),
+        ),
       ),
     );
   }
