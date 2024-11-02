@@ -65,7 +65,7 @@ class ListTileCard extends StatefulWidget {
 class _ListTileCardState extends State<ListTileCard> {
   double _scale = 1.0;
   void _onTapDown(TapDownDetails details) {
-    setState(() => _scale = 0.99);
+    setState(() => _scale = 0.988);
   }
 
   void _onTapUp(TapUpDetails details) {
@@ -80,6 +80,7 @@ class _ListTileCardState extends State<ListTileCard> {
   Widget build(BuildContext context) {
     return ContentCard(
       color: widget.color,
+      onTap: widget.onTap == null ? null : () {},
       borderRadius: widget.borderRadius ??
           (widget.position == TileListPosition.single
               ? BorderRadius.circular(13)
@@ -115,6 +116,7 @@ class _ListTileCardState extends State<ListTileCard> {
         onTapDown: _onTapDown,
         onTapUp: _onTapUp,
         onTapCancel: _onTapCancel,
+        onTap: widget.onTap,
         child: AnimatedScale(
           scale: _scale,
           duration: Durations.short3,
@@ -126,7 +128,6 @@ class _ListTileCardState extends State<ListTileCard> {
             title: widget.title,
             subtitle: widget.subtitle,
             trailing: widget.trailing,
-            onTap: widget.onTap,
             onLongPress: widget.onLongPress,
             contentPadding: widget.contentPadding ??
                 const EdgeInsets.only(right: 8, left: 15),

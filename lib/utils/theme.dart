@@ -16,7 +16,9 @@ ThemeData ninUiThemeData({
   return ThemeData(
     visualDensity: VisualDensity.standard,
     materialTapTargetSize: MaterialTapTargetSize.padded,
-    colorScheme: colorSchemeGen,
+    colorScheme: colorSchemeGen.copyWith(
+      surface: isOneUi && Brightness.dark == brightness ? Colors.black : null,
+    ),
     useMaterial3: true,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
@@ -24,12 +26,17 @@ ThemeData ninUiThemeData({
       },
     ),
     searchBarTheme: SearchBarThemeData(
-      backgroundColor:
-          WidgetStatePropertyAll(getBackgroundColor(colorSchemeGen)),
+      backgroundColor: WidgetStatePropertyAll(getContentColor(colorSchemeGen)),
       elevation: const WidgetStatePropertyAll(0),
       constraints: const BoxConstraints(
         maxHeight: 53,
         minHeight: 53,
+      ),
+    ),
+    cardTheme: CardTheme(
+      clipBehavior: Clip.antiAlias,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(18),
       ),
     ),
     appBarTheme: AppBarTheme(

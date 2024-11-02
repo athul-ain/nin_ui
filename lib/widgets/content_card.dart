@@ -25,11 +25,15 @@ class ContentCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final cardColor = color ?? getContentColor(Theme.of(context).colorScheme);
+    final cardTheme = Theme.of(context).cardTheme;
+
     return Card(
       margin: margin,
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(13),
-      ),
+      shape: borderRadius == null
+          ? cardTheme.shape
+          : RoundedRectangleBorder(
+              borderRadius: borderRadius ?? BorderRadius.circular(13),
+            ),
       clipBehavior: Clip.antiAlias,
       elevation: 0,
       color: cardColor,

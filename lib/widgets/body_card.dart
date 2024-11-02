@@ -49,9 +49,9 @@ class BodyCard extends StatelessWidget {
         elevation: 0,
         margin: const EdgeInsets.all(0),
         color: color ?? bgColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(18),
-        ),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(18),
+        // ),
         child: child,
       ),
     );

@@ -4,7 +4,7 @@ import 'package:nin_ui/nin_ui.dart';
 
 import '../utils/color.dart';
 
-class OpenListTileCard extends StatelessWidget {
+class OpenListTileCard extends StatefulWidget {
   final Widget? title;
   final Widget? leading;
   final Widget? subtitle;
@@ -51,43 +51,71 @@ class OpenListTileCard extends StatelessWidget {
   });
 
   @override
+  State<OpenListTileCard> createState() => _OpenListTileCardState();
+}
+
+class _OpenListTileCardState extends State<OpenListTileCard> {
+  double _scale = 1.0;
+  void _onTapDown(TapDownDetails details) {
+    setState(() => _scale = 0.988);
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() => _scale = 1.0);
+  }
+
+  void _onTapCancel() {
+    setState(() => _scale = 1.0);
+  }
+
+  @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final cardColor = color ?? getContentColor(colorScheme);
+    final cardColor = widget.color ?? getContentColor(colorScheme);
     final bgColor = getBackgroundColor(colorScheme);
 
     return Padding(
-      padding: margin,
+      padding: widget.margin,
       child: OpenContainer(
         closedColor: cardColor,
         closedElevation: 0,
         openColor: bgColor,
         openElevation: 0,
         closedShape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(closedBorderRadius),
+          borderRadius: BorderRadius.circular(widget.closedBorderRadius),
         ),
         clipBehavior: Clip.antiAlias,
         closedBuilder: (context, openContainer) {
           return ContentCard(
             color: cardColor,
             margin: EdgeInsets.zero,
-            child: ListTile(
-              iconColor: iconColor,
-              textColor: textColor,
-              leading: leading,
-              title: title,
-              subtitle: subtitle,
-              trailing: trailing,
+            onTap: () {},
+            child: GestureDetector(
+              onTapDown: _onTapDown,
+              onTapUp: _onTapUp,
+              onTapCancel: _onTapCancel,
               onTap: openContainer,
-              onLongPress: onLongPress,
-              contentPadding:
-                  contentPadding ?? const EdgeInsets.only(right: 8, left: 15),
-              horizontalTitleGap: horizontalTitleGap ?? 15,
+              child: AnimatedScale(
+                scale: _scale,
+                duration: Durations.short3,
+                child: ListTile(
+                  iconColor: widget.iconColor,
+                  textColor: widget.textColor,
+                  leading: widget.leading,
+                  title: widget.title,
+                  subtitle: widget.subtitle,
+                  trailing: widget.trailing,
+                  onLongPress: widget.onLongPress,
+                  contentPadding: widget.contentPadding ??
+                      const EdgeInsets.only(right: 8, left: 15),
+                  horizontalTitleGap: widget.horizontalTitleGap ?? 15,
+                ),
+              ),
             ),
           );
         },
         openBuilder: (context, closeContainer) {
-          return openPage;
+          return widget.openPage;
         },
       ),
     );
