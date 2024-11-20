@@ -1,6 +1,6 @@
 name: nin_ui
 description: A new Flutter package project.
-version: 0.0.6
+version: 0.0.7
 homepage:
 
 environment:
@@ -11,15 +11,16 @@ dependencies:
   flutter:
     sdk: flutter
 
-  connectivity_plus: ^6.0.3
+  connectivity_plus: ^6.1.0
   device_info_plus: ^11.1.0
   bitsdojo_window: ^0.1.6
   animations: ^2.0.11
+  fluentui_system_icons: ^1.1.264
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

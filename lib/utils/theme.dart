@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/material.dart';
 import 'color.dart';
 
@@ -52,12 +55,26 @@ ThemeData ninUiThemeData({
         ),
       ),
     ),
-    actionIconTheme: isOneUi
-        ? ActionIconThemeData(
-            backButtonIconBuilder: (context) {
-              return const Icon(Icons.arrow_back_ios_new_rounded);
-            },
-          )
+    actionIconTheme: ActionIconThemeData(
+      backButtonIconBuilder: (context) {
+        if (Platform.isWindows) {
+          return const Icon(FluentIcons.arrow_left_48_regular);
+        } else if (isOneUi) {
+          return const Icon(FluentIcons.chevron_left_32_regular);
+        }
+
+        return BackButtonIcon();
+      },
+    ),
+    bottomSheetTheme: BottomSheetThemeData(
+      backgroundColor: getBackgroundColor(colorSchemeGen),
+      modalBarrierColor: isOneUi && Brightness.dark == brightness
+          ? Colors.white10.withOpacity(.07)
+          : null,
+      clipBehavior: Clip.antiAlias,
+    ),
+    dialogBackgroundColor: isOneUi && Brightness.dark == brightness
+        ? colorSchemeGen.surfaceContainer
         : null,
   );
 }
