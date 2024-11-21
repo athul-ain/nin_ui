@@ -60,10 +60,11 @@ ThemeData ninUiThemeData({
         if (Platform.isWindows) {
           return const Icon(FluentIcons.arrow_left_48_regular);
         } else if (isOneUi) {
-          return const Icon(FluentIcons.chevron_left_32_regular);
+          return const Icon(FluentIcons.chevron_left_24_regular);
+        } else if (Platform.isMacOS || Platform.isIOS) {
+          return const Icon(Icons.arrow_back_ios_new_rounded);
         }
-
-        return BackButtonIcon();
+        return const Icon(Icons.arrow_back);
       },
     ),
     bottomSheetTheme: BottomSheetThemeData(
