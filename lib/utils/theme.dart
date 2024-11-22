@@ -16,11 +16,13 @@ ThemeData ninUiThemeData({
         brightness: brightness,
       );
 
+  final bool isOledBlack = isOneUi && Brightness.dark == brightness;
+
   return ThemeData(
     visualDensity: VisualDensity.standard,
     materialTapTargetSize: MaterialTapTargetSize.padded,
     colorScheme: colorSchemeGen.copyWith(
-      surface: isOneUi && Brightness.dark == brightness ? Colors.black : null,
+      surface: isOledBlack ? Colors.black : null,
     ),
     useMaterial3: true,
     pageTransitionsTheme: const PageTransitionsTheme(
@@ -46,6 +48,15 @@ ThemeData ninUiThemeData({
       titleSpacing: isOneUi ? 0 : null,
       backgroundColor: getBackgroundColor(colorSchemeGen),
       foregroundColor: colorSchemeGen.onSurface,
+      titleTextStyle: isOneUi
+          ? TextStyle(
+              color: colorSchemeGen.onSurface,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            )
+          : Platform.isAndroid
+              ? TextStyle(fontSize: 20)
+              : null,
     ),
     inputDecorationTheme: const InputDecorationTheme(filled: true),
     textButtonTheme: TextButtonThemeData(
@@ -60,7 +71,7 @@ ThemeData ninUiThemeData({
         if (Platform.isWindows) {
           return const Icon(FluentIcons.arrow_left_48_regular);
         } else if (isOneUi) {
-          return const Icon(FluentIcons.chevron_left_24_regular);
+          return const Icon(FluentIcons.chevron_left_12_regular);
         } else if (Platform.isMacOS || Platform.isIOS) {
           return const Icon(Icons.arrow_back_ios_new_rounded);
         }
@@ -68,15 +79,12 @@ ThemeData ninUiThemeData({
       },
     ),
     bottomSheetTheme: BottomSheetThemeData(
-      backgroundColor: getBackgroundColor(colorSchemeGen),
-      modalBarrierColor: isOneUi && Brightness.dark == brightness
-          ? Colors.white10.withOpacity(.07)
-          : null,
+      backgroundColor: isOledBlack
+          ? colorSchemeGen.surfaceContainer
+          : getBackgroundColor(colorSchemeGen),
       clipBehavior: Clip.antiAlias,
     ),
-    dialogBackgroundColor: isOneUi && Brightness.dark == brightness
-        ? colorSchemeGen.surfaceContainer
-        : null,
+    dialogBackgroundColor: isOledBlack ? colorSchemeGen.surfaceContainer : null,
   );
 }
 
