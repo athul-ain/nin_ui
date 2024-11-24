@@ -51,11 +51,14 @@ ThemeData ninUiThemeData({
       titleTextStyle: isOneUi
           ? TextStyle(
               color: colorSchemeGen.onSurface,
-              fontSize: 18,
+              fontSize: 20,
               fontWeight: FontWeight.w600,
             )
           : Platform.isAndroid
-              ? TextStyle(fontSize: 20)
+              ? TextStyle(
+                  fontSize: 20,
+                  color: colorSchemeGen.onSurface,
+                )
               : null,
     ),
     inputDecorationTheme: const InputDecorationTheme(filled: true),
@@ -71,7 +74,10 @@ ThemeData ninUiThemeData({
         if (Platform.isWindows) {
           return const Icon(FluentIcons.arrow_left_48_regular);
         } else if (isOneUi) {
-          return const Icon(FluentIcons.chevron_left_12_regular);
+          return const Icon(
+            FluentIcons.chevron_left_16_regular,
+            size: 27,
+          );
         } else if (Platform.isMacOS || Platform.isIOS) {
           return const Icon(Icons.arrow_back_ios_new_rounded);
         }
