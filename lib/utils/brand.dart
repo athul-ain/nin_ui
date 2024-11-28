@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'dart:developer';
+import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 
 class BrandDetector {
@@ -15,8 +17,12 @@ class BrandDetector {
 
   Future<void> _checkOneUi() async {
     final deviceInfo = DeviceInfoPlugin();
-    final androidInfo = await deviceInfo.androidInfo;
-    _brand = androidInfo.brand;
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfo.androidInfo;
+      _brand = androidInfo.brand;
+    } else if (Platform.isIOS || Platform.isMacOS) {
+      _brand = "Apple";
+    }
     _controller.add(_brand == 'samsung');
   }
 
