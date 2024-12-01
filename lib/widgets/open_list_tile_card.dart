@@ -89,6 +89,7 @@ class _OpenListTileCardState extends State<OpenListTileCard> {
           return ContentCard(
             color: cardColor,
             margin: EdgeInsets.zero,
+            borderRadius: BorderRadius.circular(widget.closedBorderRadius),
             onTap: () {},
             child: GestureDetector(
               onTapDown: _onTapDown,
