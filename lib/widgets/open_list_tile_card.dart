@@ -81,6 +81,7 @@ class _OpenListTileCardState extends State<OpenListTileCard> {
         closedElevation: 0,
         openColor: bgColor,
         openElevation: 0,
+        useRootNavigator: true,
         closedShape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(widget.closedBorderRadius),
         ),

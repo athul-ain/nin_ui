@@ -1,4 +1,4 @@
-library nin_ui;
+library;
 
 export 'widgets/body_card.dart';
 export 'widgets/header_card.dart';

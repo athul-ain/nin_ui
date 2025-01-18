@@ -40,6 +40,8 @@ class ListTileCard extends StatefulWidget {
   final bool dense;
   final BorderRadiusGeometry? borderRadius;
 
+  final double? minTileHeight;
+
   const ListTileCard({
     super.key,
     this.title,
@@ -56,6 +58,7 @@ class ListTileCard extends StatefulWidget {
     this.dense = false,
     this.borderRadius,
     this.position = TileListPosition.single,
+    this.minTileHeight,
   });
 
   @override
@@ -121,6 +124,7 @@ class _ListTileCardState extends State<ListTileCard> {
           scale: _scale,
           duration: Durations.short3,
           child: ListTile(
+            minTileHeight: widget.minTileHeight,
             dense: widget.dense,
             iconColor: widget.iconColor,
             textColor: widget.textColor,

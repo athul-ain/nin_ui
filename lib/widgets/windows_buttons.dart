@@ -28,10 +28,11 @@ class WindowButtons extends StatelessWidget {
         ),
         CloseWindowButton(
           colors: WindowButtonColors(
-              mouseOver: const Color(0xFFD32F2F),
-              mouseDown: const Color(0xFFB71C1C),
-              iconNormal: colorScheme.onSurface,
-              iconMouseOver: Colors.white),
+            mouseOver: const Color(0xFFD32F2F),
+            mouseDown: const Color(0xFFB71C1C),
+            iconNormal: colorScheme.onSurface,
+            iconMouseOver: Colors.white,
+          ),
         ),
       ],
     );

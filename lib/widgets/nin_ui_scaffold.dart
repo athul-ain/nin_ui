@@ -69,9 +69,8 @@ class NinUiScaffold extends StatelessWidget {
         systemNavigationBarIconBrightness: iconBrightness,
       ),
       child: ConditionalParentWidget(
-        enableParent: kIsWeb
-            ? false
-            : (Platform.isWindows || Platform.isMacOS || Platform.isLinux),
+        enableParent: !kIsWeb &&
+            (Platform.isWindows || Platform.isMacOS || Platform.isLinux),
         builder: (child) {
           return Container(
             color: backgroundColor ?? bgColor,

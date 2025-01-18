@@ -64,7 +64,6 @@ class _ConnectivityIconButtonState extends State<ConnectivityIconButton> {
         case ConnectivityResult.other:
           return const Icon(Icons.public_rounded);
         case ConnectivityResult.none:
-        default:
           return const Icon(Icons.cloud_off_rounded);
       }
     }
