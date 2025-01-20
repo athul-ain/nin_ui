@@ -291,9 +291,9 @@ class NinUiScaffold extends StatelessWidget {
                                               ? safePadding.top
                                               : 8
                                           : 0,
-                                      bottom: safePadding.bottom > 8
-                                          ? safePadding.bottom
-                                          : 8,
+                                      // bottom: safePadding.bottom > 8
+                                      //     ? safePadding.bottom
+                                      //     : 8,
                                       left: safePadding.left > 18
                                           ? safePadding.left + 3
                                           : 18,
