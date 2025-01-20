@@ -31,6 +31,7 @@ class OpenListTileCard extends StatefulWidget {
   final Widget openPage;
   final double closedBorderRadius;
   final EdgeInsetsGeometry margin;
+  final void Function()? onClosed;
 
   const OpenListTileCard({
     super.key,
@@ -48,6 +49,7 @@ class OpenListTileCard extends StatefulWidget {
     this.closedBorderRadius = 13,
     this.margin =
         const EdgeInsets.only(left: 0.5, right: 0.5, top: 0, bottom: 5),
+    this.onClosed,
   });
 
   @override
@@ -86,6 +88,9 @@ class _OpenListTileCardState extends State<OpenListTileCard> {
           borderRadius: BorderRadius.circular(widget.closedBorderRadius),
         ),
         clipBehavior: Clip.antiAlias,
+        onClosed: (_) {
+          widget.onClosed?.call();
+        },
         closedBuilder: (context, openContainer) {
           return ContentCard(
             color: cardColor,
