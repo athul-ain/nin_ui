@@ -179,7 +179,7 @@ extension ListTileCardExtention on ListTileCard {
         ),
         margin: EdgeInsets.zero,
         position: position,
-        minTileHeight: minTileHeight,
+        minTileHeight: minTileHeight ?? 55,
       ),
     );
   }
