@@ -42,6 +42,8 @@ class ListTileCard extends StatefulWidget {
 
   final double? minTileHeight;
 
+  final EdgeInsetsGeometry? margin;
+
   const ListTileCard({
     super.key,
     this.title,
@@ -59,6 +61,7 @@ class ListTileCard extends StatefulWidget {
     this.borderRadius,
     this.position = TileListPosition.single,
     this.minTileHeight,
+    this.margin,
   });
 
   @override
@@ -107,14 +110,15 @@ class _ListTileCardState extends State<ListTileCard> {
                           topLeft: Radius.circular(3),
                           topRight: Radius.circular(3),
                         )),
-      margin: EdgeInsets.only(
-          left: 0.5,
-          right: 0.5,
-          top: 0,
-          bottom: [TileListPosition.middle, TileListPosition.top]
-                  .contains(widget.position)
-              ? 3
-              : 5),
+      margin: widget.margin ??
+          EdgeInsets.only(
+              left: 0.5,
+              right: 0.5,
+              top: 0,
+              bottom: [TileListPosition.middle, TileListPosition.top]
+                      .contains(widget.position)
+                  ? 3
+                  : 5),
       child: GestureDetector(
         onTapDown: _onTapDown,
         onTapUp: _onTapUp,
@@ -138,6 +142,48 @@ class _ListTileCardState extends State<ListTileCard> {
             horizontalTitleGap: widget.horizontalTitleGap ?? 15,
           ),
         ),
+      ),
+    );
+  }
+}
+
+extension ListTileCardExtention on ListTileCard {
+  Widget form(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Container(
+      decoration: BoxDecoration(
+        border: Border(
+          bottom: BorderSide(
+            color: colorScheme.onSurfaceVariant,
+            width: 1.0,
+          ),
+        ),
+      ),
+      child: ListTileCard(
+        title: title,
+        leading: leading,
+        subtitle: subtitle,
+        trailing: trailing,
+        onTap: onTap,
+        onLongPress: onLongPress,
+        contentPadding: contentPadding,
+        horizontalTitleGap: horizontalTitleGap,
+        color: colorScheme.surfaceContainerHighest,
+        iconColor: iconColor,
+        textColor: textColor,
+        dense: dense,
+        borderRadius: BorderRadius.only(
+          topLeft: Radius.circular(4),
+          topRight: Radius.circular(4),
+        ),
+        margin: EdgeInsets.only(
+          left: 0.5,
+          right: 0.5,
+          top: 0,
+          bottom: 0,
+        ),
+        position: position,
+        minTileHeight: minTileHeight,
       ),
     );
   }
