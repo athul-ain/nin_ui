@@ -159,6 +159,7 @@ extension ListTileCardExtention on ListTileCard {
           ),
         ),
       ),
+      margin: EdgeInsets.symmetric(horizontal: 0.5),
       child: ListTileCard(
         title: title,
         leading: leading,
@@ -176,12 +177,7 @@ extension ListTileCardExtention on ListTileCard {
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),
-        margin: EdgeInsets.only(
-          left: 0.5,
-          right: 0.5,
-          top: 0,
-          bottom: 0,
-        ),
+        margin: EdgeInsets.zero,
         position: position,
         minTileHeight: minTileHeight,
       ),
