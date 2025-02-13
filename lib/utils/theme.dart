@@ -90,7 +90,15 @@ ThemeData ninUiThemeData({
           : getBackgroundColor(colorSchemeGen),
       clipBehavior: Clip.antiAlias,
     ),
-    dialogBackgroundColor: isOledBlack ? colorSchemeGen.surfaceContainer : null,
+    dialogTheme: DialogThemeData(
+      backgroundColor: isOledBlack ? colorSchemeGen.surfaceContainer : null,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15),
+      ),
+    ),
+    progressIndicatorTheme: ProgressIndicatorThemeData(
+      year2023: false,
+    ),
   );
 }
 
