@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/foundation.dart';
 
 class BrandDetector {
   final _controller = StreamController<bool>.broadcast();
@@ -15,6 +16,8 @@ class BrandDetector {
   }
 
   Future<void> _checkOneUi() async {
+    if (kIsWeb) return;
+
     final deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfo.androidInfo;
