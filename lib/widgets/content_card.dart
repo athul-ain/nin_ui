@@ -47,7 +47,10 @@ class ContentCard extends StatelessWidget {
         clipBehavior: Clip.antiAlias,
         decoration: BoxDecoration(
           color: cardColor,
-          borderRadius: borderRadius ?? BorderRadius.circular(13),
+          borderRadius: borderRadius ??
+              (cardTheme.shape is RoundedRectangleBorder
+                  ? (cardTheme.shape as RoundedRectangleBorder).borderRadius
+                  : BorderRadius.circular(13)),
         ),
         child: Material(
           color: Colors.transparent,
