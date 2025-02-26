@@ -2,10 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:nin_ui/nin_ui.dart';
 
 enum TileListPosition {
+  /// To be used as ColumnTiles
   top,
   middle,
   bottom,
   single,
+
+  /// To be used as GridTiles
+  topLeft,
+  topRight,
+  topMiddle,
+  bottomLeft,
+  bottomRight,
+  bottomMiddle,
+  middleLeft,
+  middleRight,
+  middleCenter,
+
+  /// Tobe used as a rowTiles
+  singleLeft,
+  singleRight,
+  singleCenter,
 }
 
 class ListTileCard extends StatefulWidget {
@@ -17,31 +34,13 @@ class ListTileCard extends StatefulWidget {
   final Color? iconColor;
   final Color? textColor;
   final TileListPosition? position;
-
-  /// Called when the user taps this list tile.
-  ///
-  /// Inoperative if [enabled] is false.
   final GestureTapCallback? onTap;
-
-  /// Called when the user long-presses on this list tile.
-  ///
-  /// Inoperative if [enabled] is false.
   final GestureLongPressCallback? onLongPress;
-
-  /// The tile's internal padding.
-  ///
-  /// Insets a [ListTile]'s contents: its [leading], [title], [subtitle],
-  /// and [trailing] widgets.
-  ///
-  /// If null, `const EdgeInsets.only(right: 8, left: 15)` is used.
   final EdgeInsetsGeometry? contentPadding;
-
   final double? horizontalTitleGap;
   final bool dense;
   final BorderRadiusGeometry? borderRadius;
-
   final double? minTileHeight;
-
   final EdgeInsetsGeometry? margin;
 
   const ListTileCard({
@@ -70,6 +69,7 @@ class ListTileCard extends StatefulWidget {
 
 class _ListTileCardState extends State<ListTileCard> {
   double _scale = 1.0;
+
   void _onTapDown(TapDownDetails details) {
     setState(() => _scale = 0.988);
   }
@@ -82,43 +82,167 @@ class _ListTileCardState extends State<ListTileCard> {
     setState(() => _scale = 1.0);
   }
 
+  BorderRadiusGeometry _getBorderRadius() {
+    if (widget.borderRadius != null) return widget.borderRadius!;
+    switch (widget.position) {
+      case TileListPosition.single:
+        return const BorderRadius.all(Radius.circular(13));
+      case TileListPosition.middle:
+        return const BorderRadius.all(Radius.circular(3));
+      case TileListPosition.top:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(13),
+          topRight: Radius.circular(13),
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.bottom:
+        return const BorderRadius.only(
+          bottomLeft: Radius.circular(13),
+          bottomRight: Radius.circular(13),
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+        );
+      case TileListPosition.topLeft:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(13),
+          topRight: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.topRight:
+        return const BorderRadius.only(
+          topRight: Radius.circular(13),
+          topLeft: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.topMiddle:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.bottomLeft:
+        return const BorderRadius.only(
+          bottomLeft: Radius.circular(13),
+          bottomRight: Radius.circular(3),
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+        );
+      case TileListPosition.bottomRight:
+        return const BorderRadius.only(
+          bottomRight: Radius.circular(13),
+          bottomLeft: Radius.circular(3),
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+        );
+      case TileListPosition.bottomMiddle:
+        return const BorderRadius.only(
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+        );
+      case TileListPosition.middleLeft:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.middleRight:
+        return const BorderRadius.only(
+          topRight: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+          topLeft: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+        );
+      case TileListPosition.middleCenter:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.singleLeft:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(13),
+          bottomLeft: Radius.circular(13),
+          topRight: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      case TileListPosition.singleRight:
+        return const BorderRadius.only(
+          topRight: Radius.circular(13),
+          bottomRight: Radius.circular(13),
+          topLeft: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+        );
+      case TileListPosition.singleCenter:
+        return const BorderRadius.only(
+          topLeft: Radius.circular(3),
+          topRight: Radius.circular(3),
+          bottomLeft: Radius.circular(3),
+          bottomRight: Radius.circular(3),
+        );
+      default:
+        return BorderRadius.circular(13);
+    }
+  }
+
+  EdgeInsetsGeometry _getMargin() {
+    if (widget.margin != null) return widget.margin!;
+
+    switch (widget.position) {
+      case TileListPosition.single:
+        return const EdgeInsets.fromLTRB(0.5, 0, 0.5, 5);
+      case TileListPosition.middle:
+        return const EdgeInsets.fromLTRB(0.5, 3, 0.5, 3);
+      case TileListPosition.top:
+        return const EdgeInsets.fromLTRB(0.5, 0, 0.5, 3);
+      case TileListPosition.bottom:
+        return const EdgeInsets.fromLTRB(0.5, 3, 0.5, 5);
+
+      case TileListPosition.topLeft:
+        return const EdgeInsets.fromLTRB(0.5, 0, 3, 3);
+      case TileListPosition.topRight:
+        return const EdgeInsets.fromLTRB(3, 0, 0.5, 3);
+      case TileListPosition.topMiddle:
+        return const EdgeInsets.fromLTRB(3, 0, 3, 3);
+      case TileListPosition.middleLeft:
+        return const EdgeInsets.fromLTRB(0.5, 0, 3, 3);
+      case TileListPosition.middleRight:
+        return const EdgeInsets.fromLTRB(3, 0, 0.5, 3);
+      case TileListPosition.middleCenter:
+        return const EdgeInsets.fromLTRB(3, 0, 3, 3);
+      case TileListPosition.bottomLeft:
+        return const EdgeInsets.fromLTRB(0.5, 3, 3, 5);
+      case TileListPosition.bottomRight:
+        return const EdgeInsets.fromLTRB(3, 3, 0.5, 5);
+      case TileListPosition.bottomMiddle:
+        return const EdgeInsets.fromLTRB(3, 3, 3, 5);
+
+      case TileListPosition.singleLeft:
+        return const EdgeInsets.fromLTRB(0.5, 0, 3, 5);
+      case TileListPosition.singleRight:
+        return const EdgeInsets.fromLTRB(3, 0, 0.5, 5);
+      case TileListPosition.singleCenter:
+        return const EdgeInsets.fromLTRB(3, 0, 3, 5);
+
+      default:
+        return const EdgeInsets.fromLTRB(0.5, 0, 0.5, 5);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ContentCard(
       color: widget.color,
       onTap: widget.onTap == null ? null : () {},
-      borderRadius: widget.borderRadius ??
-          (widget.position == TileListPosition.single
-              ? BorderRadius.circular(13)
-              : widget.position == TileListPosition.top
-                  ? const BorderRadius.only(
-                      topLeft: Radius.circular(13),
-                      topRight: Radius.circular(13),
-                      bottomLeft: Radius.circular(3),
-                      bottomRight: Radius.circular(3),
-                    )
-                  : widget.position == TileListPosition.bottom
-                      ? const BorderRadius.only(
-                          bottomLeft: Radius.circular(13),
-                          bottomRight: Radius.circular(13),
-                          topLeft: Radius.circular(3),
-                          topRight: Radius.circular(3),
-                        )
-                      : const BorderRadius.only(
-                          bottomLeft: Radius.circular(3),
-                          bottomRight: Radius.circular(3),
-                          topLeft: Radius.circular(3),
-                          topRight: Radius.circular(3),
-                        )),
-      margin: widget.margin ??
-          EdgeInsets.only(
-              left: 0.5,
-              right: 0.5,
-              top: 0,
-              bottom: [TileListPosition.middle, TileListPosition.top]
-                      .contains(widget.position)
-                  ? 3
-                  : 5),
+      borderRadius: _getBorderRadius(),
+      margin: _getMargin(),
       child: GestureDetector(
         onTapDown: _onTapDown,
         onTapUp: _onTapUp,
@@ -147,7 +271,7 @@ class _ListTileCardState extends State<ListTileCard> {
   }
 }
 
-extension ListTileCardExtention on ListTileCard {
+extension ListTileCardExtension on ListTileCard {
   Widget form(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     return Container(
@@ -159,7 +283,7 @@ extension ListTileCardExtention on ListTileCard {
           ),
         ),
       ),
-      margin: EdgeInsets.symmetric(horizontal: 0.5),
+      margin: const EdgeInsets.symmetric(horizontal: 0.5),
       child: ListTileCard(
         title: title,
         leading: leading,
@@ -173,7 +297,7 @@ extension ListTileCardExtention on ListTileCard {
         iconColor: iconColor,
         textColor: textColor,
         dense: dense,
-        borderRadius: BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(4),
           topRight: Radius.circular(4),
         ),

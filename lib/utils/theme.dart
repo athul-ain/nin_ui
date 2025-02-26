@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:fluentui_system_icons/fluentui_system_icons.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'color.dart';
 
@@ -54,7 +55,7 @@ ThemeData ninUiThemeData({
               fontSize: 20,
               fontWeight: FontWeight.w600,
             )
-          : Platform.isAndroid
+          : (!kIsWeb && Platform.isAndroid)
               ? TextStyle(
                   fontSize: 20,
                   color: colorSchemeGen.onSurface,
@@ -95,9 +96,6 @@ ThemeData ninUiThemeData({
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
       ),
-    ),
-    progressIndicatorTheme: ProgressIndicatorThemeData(
-      year2023: false,
     ),
   );
 }
