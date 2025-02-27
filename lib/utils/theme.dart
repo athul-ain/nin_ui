@@ -72,6 +72,9 @@ ThemeData ninUiThemeData({
     ),
     actionIconTheme: ActionIconThemeData(
       backButtonIconBuilder: (context) {
+        if (kIsWeb) {
+          return const Icon(FluentIcons.arrow_left_48_regular);
+        }
         if (Platform.isWindows) {
           return const Icon(FluentIcons.arrow_left_48_regular);
         } else if (isOneUi) {
