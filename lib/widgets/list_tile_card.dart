@@ -31,6 +31,7 @@ class ListTileCard extends StatefulWidget {
   final Widget? subtitle;
   final Widget? trailing;
   final Color? color;
+  final Gradient? gradient;
   final Color? iconColor;
   final Color? textColor;
   final TileListPosition? position;
@@ -54,6 +55,7 @@ class ListTileCard extends StatefulWidget {
     this.contentPadding,
     this.horizontalTitleGap,
     this.color,
+    this.gradient,
     this.iconColor,
     this.textColor,
     this.dense = false,
@@ -61,7 +63,8 @@ class ListTileCard extends StatefulWidget {
     this.position = TileListPosition.single,
     this.minTileHeight,
     this.margin,
-  });
+  }) : assert(color == null || gradient == null,
+            'Cannot provide both a color and a gradient');
 
   @override
   State<ListTileCard> createState() => _ListTileCardState();
@@ -240,6 +243,7 @@ class _ListTileCardState extends State<ListTileCard> {
   Widget build(BuildContext context) {
     return ContentCard(
       color: widget.color,
+      gradient: widget.gradient,
       onTap: widget.onTap == null ? null : () {},
       borderRadius: _getBorderRadius(),
       margin: _getMargin(),
