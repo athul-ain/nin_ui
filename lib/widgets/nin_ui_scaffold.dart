@@ -11,6 +11,9 @@ class NinUiScaffold extends StatelessWidget {
   final Widget? drawer;
   final Widget? floatingActionButton;
   final NavigationBar? navigationBar;
+
+  /// If null will auto generated with navigationbar items
+  final NavigationRail? navigationRail;
   final bool? isPageLoading;
   final Widget? loadingBody;
   final Widget? banner;
@@ -31,6 +34,7 @@ class NinUiScaffold extends StatelessWidget {
     this.drawer,
     this.floatingActionButton,
     this.navigationBar,
+    this.navigationRail,
     this.isPageLoading,
     this.loadingBody,
     this.floatingActionButtonLocation,
@@ -114,48 +118,49 @@ class NinUiScaffold extends StatelessWidget {
             if (!smallScreen &&
                 (!largeScreen || drawer == null) &&
                 navigationBar != null)
-              NavigationRail(
-                useIndicator: true,
-                extended:
-                    //  (largeScreen && drawer == null) ? true :
-                    false,
-                minExtendedWidth: 158,
-                backgroundColor: backgroundColor ?? bgColor,
-                groupAlignment: -0.95,
-                leading: floatingActionButton ??
-                    (drawer != null && !largeScreen
-                        ? const DrawerButton()
-                        : appBar?.leading != null
-                            ? appBar!.leading
-                            : const SizedBox(
-                                height: 38,
-                              )),
-                destinations: navigationBar!.destinations.map(
-                  (e) {
-                    NavigationDestination thisDestination =
-                        e as NavigationDestination;
-                    return NavigationRailDestination(
-                      icon: thisDestination.icon,
-                      selectedIcon: thisDestination.selectedIcon,
-                      label: Text(thisDestination.label),
-                    );
-                  },
-                ).toList(),
-                selectedIndex: navigationBar!.selectedIndex,
-                onDestinationSelected: navigationBar!.onDestinationSelected,
-                labelType: (largeScreen && drawer == null) ||
-                        navigationBar!.labelBehavior ==
-                            NavigationDestinationLabelBehavior.alwaysHide
-                    ? NavigationRailLabelType.none
-                    : navigationBar!.labelBehavior ==
-                            NavigationDestinationLabelBehavior.alwaysShow
-                        ? NavigationRailLabelType.all
-                        : navigationBar!.labelBehavior ==
-                                NavigationDestinationLabelBehavior
-                                    .onlyShowSelected
-                            ? NavigationRailLabelType.selected
-                            : null,
-              )
+              navigationRail != null
+                  ? navigationRail!
+                  : NavigationRail(
+                      useIndicator: true,
+                      extended:
+                          //  (largeScreen && drawer == null) ? true :
+                          false,
+                      minExtendedWidth: 158,
+                      backgroundColor: backgroundColor ?? bgColor,
+                      groupAlignment: -0.95,
+                      leading: floatingActionButton ??
+                          (drawer != null && !largeScreen
+                              ? const DrawerButton()
+                              : appBar?.leading != null
+                                  ? appBar!.leading
+                                  : const SizedBox(height: 38)),
+                      destinations: navigationBar!.destinations.map(
+                        (e) {
+                          NavigationDestination thisDestination =
+                              e as NavigationDestination;
+                          return NavigationRailDestination(
+                            icon: thisDestination.icon,
+                            selectedIcon: thisDestination.selectedIcon,
+                            label: Text(thisDestination.label),
+                          );
+                        },
+                      ).toList(),
+                      selectedIndex: navigationBar!.selectedIndex,
+                      onDestinationSelected:
+                          navigationBar!.onDestinationSelected,
+                      labelType: (largeScreen && drawer == null) ||
+                              navigationBar!.labelBehavior ==
+                                  NavigationDestinationLabelBehavior.alwaysHide
+                          ? NavigationRailLabelType.none
+                          : navigationBar!.labelBehavior ==
+                                  NavigationDestinationLabelBehavior.alwaysShow
+                              ? NavigationRailLabelType.all
+                              : navigationBar!.labelBehavior ==
+                                      NavigationDestinationLabelBehavior
+                                          .onlyShowSelected
+                                  ? NavigationRailLabelType.selected
+                                  : null,
+                    )
             else if (!smallScreen && drawer != null)
               Padding(
                 padding: const EdgeInsets.only(right: 8),
