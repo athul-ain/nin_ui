@@ -15,8 +15,12 @@ class SheetDialogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final devicePadding = MediaQuery.paddingOf(context);
-    final cardColor = backgroundColor ??
-        Theme.of(context).colorScheme.surfaceContainer.withAlpha(133);
+    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+
+    final genColor = colorScheme.brightness == Brightness.dark
+        ? colorScheme.surfaceContainer.withAlpha(233)
+        : colorScheme.surfaceContainer.withAlpha(218);
+   
     return Container(
       margin: EdgeInsets.only(
         bottom: devicePadding.bottom + 16,
@@ -32,7 +36,7 @@ class SheetDialogCard extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
         child: Container(
           decoration: BoxDecoration(
-            color: cardColor,
+            color: backgroundColor ?? genColor,
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           child: child,
