@@ -1,5 +1,6 @@
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
+import 'package:nin_ui/widgets/sheet_dialog_card.dart';
 
 extension StringExtension on String? {
   String? toFirstLetterCapital() {
@@ -301,5 +302,30 @@ extension ListExtension<T> on List<T> {
     }
     if (orElse != null) return orElse();
     return null;
+  }
+}
+
+extension WidgetExtension on Widget {
+  Future<T?> showSheetDialog<T>(BuildContext context, {String? title}) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Colors.transparent,
+      barrierLabel: title,
+      builder: (BuildContext context) => SheetDialogCard(
+        child: this,
+      ),
+    );
+  }
+
+  Future<T?> showBottomSheet<T>(BuildContext context, {String? title}) {
+    return showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      barrierLabel: title,
+      builder: (BuildContext context) => this,
+    );
   }
 }

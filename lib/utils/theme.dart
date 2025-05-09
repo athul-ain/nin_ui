@@ -93,6 +93,8 @@ ThemeData ninUiThemeData({
           ? colorSchemeGen.surfaceContainer
           : getBackgroundColor(colorSchemeGen),
       clipBehavior: Clip.antiAlias,
+      modalBarrierColor:
+          brightness == Brightness.dark ? Colors.white10 : Colors.black26,
     ),
     dialogTheme: DialogThemeData(
       backgroundColor: isOledBlack ? colorSchemeGen.surfaceContainer : null,
