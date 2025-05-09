@@ -31,7 +31,7 @@ class SheetDialogCard extends StatelessWidget {
         filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
         child: Container(
           decoration: BoxDecoration(
-            color: cardColor.withAlpha(118),
+            color: cardColor.withAlpha(133),
             borderRadius: BorderRadius.circular(borderRadius),
           ),
           child: child,
