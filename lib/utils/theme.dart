@@ -89,9 +89,7 @@ ThemeData ninUiThemeData({
       },
     ),
     bottomSheetTheme: BottomSheetThemeData(
-      backgroundColor: isOledBlack
-          ? colorSchemeGen.surfaceContainer
-          : getBackgroundColor(colorSchemeGen),
+      backgroundColor: colorSchemeGen.surfaceContainer,
       clipBehavior: Clip.antiAlias,
     ),
     dialogTheme: DialogThemeData(

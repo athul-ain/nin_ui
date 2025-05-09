@@ -306,25 +306,43 @@ extension ListExtension<T> on List<T> {
 }
 
 extension WidgetExtension on Widget {
-  Future<T?> showSheetDialog<T>(BuildContext context, {String? title}) {
+  Future<T?> showSheetDialog<T>(
+    BuildContext context, {
+    String? title,
+    bool isDismissible = true,
+    Color? backgroundColor,
+    Color? barrierColor,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
+      isDismissible: isDismissible,
       backgroundColor: Colors.transparent,
+      barrierColor: barrierColor,
       barrierLabel: title,
       builder: (BuildContext context) => SheetDialogCard(
+        backgroundColor: backgroundColor,
         child: this,
       ),
     );
   }
 
-  Future<T?> showBottomSheet<T>(BuildContext context, {String? title}) {
+  Future<T?> showBottomSheet<T>(
+    BuildContext context, {
+    String? title,
+    bool isDismissible = true,
+    Color? backgroundColor,
+    Color? barrierColor,
+  }) {
     return showModalBottomSheet(
       context: context,
       isScrollControlled: true,
       useSafeArea: true,
       barrierLabel: title,
+      isDismissible: isDismissible,
+      backgroundColor: backgroundColor,
+      barrierColor: barrierColor,
       builder: (BuildContext context) => this,
     );
   }
