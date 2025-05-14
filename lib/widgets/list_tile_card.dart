@@ -228,11 +228,11 @@ class _ListTileCardState extends State<ListTileCard> {
         return const EdgeInsets.fromLTRB(3, 0, 3, 5);
 
       case TileListPosition.singleLeft:
-        return const EdgeInsets.fromLTRB(0.5, 0, 3, 5);
+        return const EdgeInsets.fromLTRB(0.5, 0, .5, 5);
       case TileListPosition.singleRight:
-        return const EdgeInsets.fromLTRB(3, 0, 0.5, 5);
+        return const EdgeInsets.fromLTRB(.5, 0, 0.5, 5);
       case TileListPosition.singleCenter:
-        return const EdgeInsets.fromLTRB(3, 0, 3, 5);
+        return const EdgeInsets.fromLTRB(.5, 0, .5, 5);
 
       default:
         return const EdgeInsets.fromLTRB(0.5, 0, 0.5, 5);
