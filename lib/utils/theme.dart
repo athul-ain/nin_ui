@@ -39,7 +39,7 @@ ThemeData ninUiThemeData({
         minHeight: 53,
       ),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       clipBehavior: Clip.antiAlias,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
