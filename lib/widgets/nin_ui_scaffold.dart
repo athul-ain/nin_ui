@@ -27,6 +27,55 @@ class NinUiScaffold extends StatelessWidget {
   /// If null, the [ScaffoldState] will use the default location, [FloatingActionButtonLocation.endFloat].
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 
+  /// The alignment of the [persistentFooterButtons] inside the [OverflowBar].
+  ///
+  /// Defaults to [AlignmentDirectional.centerEnd].
+  final AlignmentDirectional persistentFooterAlignment;
+
+  /// A set of buttons that are displayed at the bottom of the scaffold.
+  ///
+  /// Typically this is a list of [TextButton] widgets. These buttons are
+  /// persistently visible, even if the [body] of the scaffold scrolls.
+  ///
+  /// These widgets will be wrapped in an [OverflowBar].
+  ///
+  /// The [persistentFooterButtons] are rendered above the
+  /// [bottomNavigationBar] but below the [body].
+  final List<Widget>? persistentFooterButtons;
+
+  /// The persistent bottom sheet to display.
+  ///
+  /// A persistent bottom sheet shows information that supplements the primary
+  /// content of the app. A persistent bottom sheet remains visible even when
+  /// the user interacts with other parts of the app.
+  ///
+  /// A closely related widget is a modal bottom sheet, which is an alternative
+  /// to a menu or a dialog and prevents the user from interacting with the rest
+  /// of the app. Modal bottom sheets can be created and displayed with the
+  /// [showModalBottomSheet] function.
+  ///
+  /// Unlike the persistent bottom sheet displayed by [showBottomSheet]
+  /// this bottom sheet is not a [LocalHistoryEntry] and cannot be dismissed
+  /// with the scaffold appbar's back button.
+  ///
+  /// If a persistent bottom sheet created with [showBottomSheet] is already
+  /// visible, it must be closed before building the Scaffold with a new
+  /// [bottomSheet].
+  ///
+  /// The value of [bottomSheet] can be any widget at all. It's unlikely to
+  /// actually be a [BottomSheet], which is used by the implementations of
+  /// [showBottomSheet] and [showModalBottomSheet]. Typically it's a widget
+  /// that includes [Material].
+  ///
+  /// See also:
+  ///
+  ///  * [showBottomSheet], which displays a bottom sheet as a route that can
+  ///    be dismissed with the scaffold's back button.
+  ///  * [showModalBottomSheet], which displays a modal bottom sheet.
+  ///  * [BottomSheetThemeData], which can be used to customize the default
+  ///    bottom sheet property values when using a [BottomSheet].
+  final Widget? bottomSheet;
+
   const NinUiScaffold({
     super.key,
     required this.body,
@@ -43,6 +92,9 @@ class NinUiScaffold extends StatelessWidget {
     this.scaffoldKey,
     this.desktopTitle,
     this.extendBodyBehindAppBar = false,
+    this.persistentFooterAlignment = AlignmentDirectional.centerEnd,
+    this.persistentFooterButtons,
+    this.bottomSheet,
   });
 
   @override
@@ -68,6 +120,9 @@ class NinUiScaffold extends StatelessWidget {
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: backgroundColor ?? bgColor,
+        persistentFooterAlignment: persistentFooterAlignment,
+        persistentFooterButtons: persistentFooterButtons,
+        bottomSheet: bottomSheet,
         extendBodyBehindAppBar: extendBodyBehindAppBar,
         appBar: appBar != null && smallScreen
             ? AppBar(

@@ -25,6 +25,18 @@ enum TileListPosition {
   singleCenter,
 }
 
+TileListPosition? getListTilePosition(int index, int length) {
+  if (index == 0 && length == 1) {
+    return TileListPosition.single;
+  } else if (index == 0) {
+    return TileListPosition.top;
+  } else if (index == length - 1) {
+    return TileListPosition.bottom;
+  } else {
+    return TileListPosition.middle;
+  }
+}
+
 class ListTileCard extends StatefulWidget {
   final Widget? title;
   final Widget? leading;
@@ -43,6 +55,7 @@ class ListTileCard extends StatefulWidget {
   final BorderRadiusGeometry? borderRadius;
   final double? minTileHeight;
   final EdgeInsetsGeometry? margin;
+  final Duration animationDuration;
 
   const ListTileCard({
     super.key,
@@ -63,6 +76,7 @@ class ListTileCard extends StatefulWidget {
     this.position = TileListPosition.single,
     this.minTileHeight,
     this.margin,
+    this.animationDuration = Durations.short3,
   }) : assert(color == null || gradient == null,
             'Cannot provide both a color and a gradient');
 
@@ -242,6 +256,7 @@ class _ListTileCardState extends State<ListTileCard> {
   @override
   Widget build(BuildContext context) {
     return ContentCard(
+      animationDuration: widget.animationDuration,
       color: widget.color,
       gradient: widget.gradient,
       onTap: widget.onTap == null ? null : () {},

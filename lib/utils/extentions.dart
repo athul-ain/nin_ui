@@ -273,6 +273,10 @@ extension DateTimeExtension on DateTime {
     final today = DateTime(now.year, now.month, now.day);
     return isBefore(today);
   }
+
+  bool isSameDay(DateTime date) {
+    return year == date.year && month == date.month && day == date.day;
+  }
 }
 
 extension ColorExtension on Color {

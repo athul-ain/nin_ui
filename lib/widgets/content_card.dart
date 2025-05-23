@@ -11,6 +11,7 @@ class ContentCard extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final void Function()? onTap;
   final BorderRadiusGeometry? borderRadius;
+  final Duration animationDuration;
 
   const ContentCard({
     super.key,
@@ -22,6 +23,7 @@ class ContentCard extends StatelessWidget {
     this.padding = const EdgeInsets.all(0),
     this.onTap,
     this.borderRadius,
+    this.animationDuration = Durations.medium3,
   }) : assert(color == null || gradient == null,
             'Cannot provide both a color and a gradient');
 
@@ -33,7 +35,7 @@ class ContentCard extends StatelessWidget {
     final cardTheme = Theme.of(context).cardTheme;
 
     return AnimatedContainer(
-      duration: Durations.medium3,
+      duration: animationDuration,
       margin: margin,
       clipBehavior: Clip.antiAlias,
       decoration: BoxDecoration(
