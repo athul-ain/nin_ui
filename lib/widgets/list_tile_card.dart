@@ -25,10 +25,17 @@ enum TileListPosition {
   singleCenter,
 }
 
-TileListPosition? getListTilePosition(int index, int length) {
-  if (index == 0 && length == 1) {
+TileListPosition? getListTilePosition(int index, int length,
+    {bool hasHeader = false}) {
+  if (length == 1) {
+    if (hasHeader) {
+      return TileListPosition.bottom;
+    }
     return TileListPosition.single;
   } else if (index == 0) {
+    if (hasHeader) {
+      return TileListPosition.middle;
+    }
     return TileListPosition.top;
   } else if (index == length - 1) {
     return TileListPosition.bottom;
