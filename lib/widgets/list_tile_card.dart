@@ -266,7 +266,7 @@ class _ListTileCardState extends State<ListTileCard> {
         onTapDown: _onTapDown,
         onTapUp: _onTapUp,
         onTapCancel: _onTapCancel,
-        onTap: widget.onTap,
+        onTap: widget.onLongPress == null ? widget.onTap : null,
         child: AnimatedScale(
           scale: _scale,
           duration: Durations.short3,
@@ -279,6 +279,7 @@ class _ListTileCardState extends State<ListTileCard> {
             title: widget.title,
             subtitle: widget.subtitle,
             trailing: widget.trailing,
+            onTap: widget.onLongPress == null ? null : widget.onTap,
             onLongPress: widget.onLongPress,
             contentPadding: widget.contentPadding ??
                 const EdgeInsets.only(right: 8, left: 15),
