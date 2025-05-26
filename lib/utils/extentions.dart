@@ -1,5 +1,6 @@
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
+import 'package:nin_ui/utils/color.dart';
 import 'package:nin_ui/widgets/sheet_dialog_card.dart';
 
 extension StringExtension on String? {
@@ -323,7 +324,7 @@ extension WidgetExtension on Widget {
       useSafeArea: true,
       isDismissible: isDismissible,
       backgroundColor: Colors.transparent,
-      barrierColor: barrierColor,
+      barrierColor: barrierColor ?? getCupertinoBarrierColor(context),
       barrierLabel: title,
       builder: (BuildContext context) => SheetDialogCard(
         backgroundColor: backgroundColor,

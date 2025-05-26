@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 Color getBackgroundColor(ColorScheme colorScheme) {
@@ -24,4 +25,21 @@ Color getContentColor(ColorScheme colorScheme) {
       : colorScheme.surfaceContainerLowest;
 
   return contentColor;
+}
+
+Color getCupertinoSheetBackgroundColor(BuildContext context) {
+  final bgColor = CupertinoDynamicColor.resolve(
+    CupertinoDynamicColor.withBrightness(
+      color: Color(0xCCF2F2F2),
+      darkColor: Color(0xCC2D2D2D),
+    ),
+    context,
+  );
+  return bgColor;
+}
+
+Color getCupertinoBarrierColor(BuildContext context) {
+  final barrierColor =
+      CupertinoDynamicColor.resolve(kCupertinoModalBarrierColor, context);
+  return barrierColor;
 }

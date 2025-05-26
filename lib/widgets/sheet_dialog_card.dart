@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:nin_ui/utils/color.dart';
 
 class SheetDialogCard extends StatelessWidget {
   const SheetDialogCard({
@@ -15,12 +16,8 @@ class SheetDialogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final devicePadding = MediaQuery.paddingOf(context);
-    final ColorScheme colorScheme = Theme.of(context).colorScheme;
+    final genColor = getCupertinoSheetBackgroundColor(context);
 
-    final genColor = colorScheme.brightness == Brightness.dark
-        ? colorScheme.surfaceContainer.withAlpha(233)
-        : colorScheme.surfaceContainer.withAlpha(218);
-   
     return Container(
       margin: EdgeInsets.only(
         bottom: devicePadding.bottom + 16,
@@ -33,7 +30,7 @@ class SheetDialogCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(borderRadius),
       ),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 8, sigmaY: 8),
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: Container(
           decoration: BoxDecoration(
             color: backgroundColor ?? genColor,
