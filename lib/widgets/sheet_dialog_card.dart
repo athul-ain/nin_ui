@@ -16,11 +16,12 @@ class SheetDialogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final devicePadding = MediaQuery.paddingOf(context);
+    final viewInsets = MediaQuery.viewInsetsOf(context);
     final genColor = getCupertinoSheetBackgroundColor(context);
 
     return Container(
       margin: EdgeInsets.only(
-        bottom: devicePadding.bottom + 16,
+        bottom: devicePadding.bottom + 16 + viewInsets.bottom,
         left: 16,
         right: 16,
       ),
