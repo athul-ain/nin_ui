@@ -11,22 +11,21 @@ ThemeData ninUiThemeData({
   ColorScheme? colorScheme,
   bool isOneUi = false,
 }) {
-  final ColorScheme colorSchemeGen = colorScheme ??
+  final bool isOledBlack = isOneUi && Brightness.dark == brightness;
+
+  final ColorScheme colorSchemeGen = (colorScheme ??
       ColorScheme.fromSeed(
         seedColor: primaryColor,
-        brightness: brightness,
-      );
+        brightness: brightness))
+      .copyWith(surface: isOledBlack ? Colors.black : null);
 
-  final bool isOledBlack = isOneUi && Brightness.dark == brightness;
   final Color contentColor = getContentColor(colorSchemeGen);
   final Color backgroundColor = getBackgroundColor(colorSchemeGen);
 
   return ThemeData(
     visualDensity: VisualDensity.standard,
     materialTapTargetSize: MaterialTapTargetSize.padded,
-    colorScheme: colorSchemeGen.copyWith(
-      surface: isOledBlack ? Colors.black : null,
-    ),
+    colorScheme: colorSchemeGen,
     useMaterial3: true,
     pageTransitionsTheme: const PageTransitionsTheme(
       builders: {
