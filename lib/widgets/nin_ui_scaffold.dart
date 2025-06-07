@@ -13,7 +13,7 @@ class NinUiScaffold extends StatelessWidget {
   final NavigationBar? navigationBar;
 
   /// If null will auto generated with navigationbar items
-  final NavigationRail? navigationRail;
+  final Widget? navigationRail;
   final bool? isPageLoading;
   final Widget? loadingBody;
   final Widget? banner;
@@ -108,8 +108,6 @@ class NinUiScaffold extends StatelessWidget {
     final bool smallScreen = isSmallScreen(context);
     final bool largeScreen = isLargeScreen(context);
 
-    final safePadding = MediaQuery.paddingOf(context);
-
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,
@@ -124,49 +122,7 @@ class NinUiScaffold extends StatelessWidget {
         persistentFooterButtons: persistentFooterButtons,
         bottomSheet: bottomSheet,
         extendBodyBehindAppBar: extendBodyBehindAppBar,
-        appBar: appBar != null && smallScreen
-            ? AppBar(
-                key: appBar!.key,
-                leading: appBar!.leading,
-                automaticallyImplyLeading: appBar!.automaticallyImplyLeading,
-                title: appBar!.title,
-                actions: appBar!.actions == null
-                    ? null
-                    : [
-                        ...appBar!.actions!,
-                        SizedBox(
-                          width: safePadding.right > 5 ? safePadding.right : 5,
-                        )
-                      ],
-                flexibleSpace: appBar!.flexibleSpace,
-                bottom: appBar!.bottom,
-                elevation: appBar!.elevation,
-                scrolledUnderElevation: appBar!.scrolledUnderElevation,
-                notificationPredicate: appBar!.notificationPredicate,
-                shadowColor: appBar!.shadowColor,
-                surfaceTintColor:
-                    appBar!.surfaceTintColor ?? backgroundColor ?? bgColor,
-                shape: appBar!.shape,
-                backgroundColor:
-                    appBar!.backgroundColor ?? backgroundColor ?? bgColor,
-                foregroundColor: appBar!.foregroundColor,
-                iconTheme: appBar!.iconTheme,
-                actionsIconTheme: appBar!.actionsIconTheme,
-                primary: appBar!.primary,
-                centerTitle: appBar!.centerTitle,
-                excludeHeaderSemantics: appBar!.excludeHeaderSemantics,
-                titleSpacing: appBar!.titleSpacing,
-                toolbarOpacity: appBar!.toolbarOpacity,
-                bottomOpacity: appBar!.bottomOpacity,
-                toolbarHeight: appBar!.toolbarHeight,
-                leadingWidth: appBar!.leadingWidth,
-                toolbarTextStyle: appBar!.toolbarTextStyle,
-                titleTextStyle: appBar!.titleTextStyle,
-                systemOverlayStyle: appBar!.systemOverlayStyle,
-                forceMaterialTransparency: appBar!.forceMaterialTransparency,
-                clipBehavior: appBar!.clipBehavior,
-              )
-            : null,
+        appBar: appBar != null && smallScreen ? appBar! : null,
         drawer: drawer != null && !largeScreen ? drawer : null,
         body: Row(
           children: [
@@ -175,47 +131,7 @@ class NinUiScaffold extends StatelessWidget {
                 navigationBar != null)
               navigationRail != null
                   ? navigationRail!
-                  : NavigationRail(
-                      useIndicator: true,
-                      extended:
-                          //  (largeScreen && drawer == null) ? true :
-                          false,
-                      minExtendedWidth: 158,
-                      backgroundColor: backgroundColor ?? bgColor,
-                      groupAlignment: -0.95,
-                      leading: floatingActionButton ??
-                          (drawer != null && !largeScreen
-                              ? const DrawerButton()
-                              : appBar?.leading != null
-                                  ? appBar!.leading
-                                  : const SizedBox(height: 38)),
-                      destinations: navigationBar!.destinations.map(
-                        (e) {
-                          NavigationDestination thisDestination =
-                              e as NavigationDestination;
-                          return NavigationRailDestination(
-                            icon: thisDestination.icon,
-                            selectedIcon: thisDestination.selectedIcon,
-                            label: Text(thisDestination.label),
-                          );
-                        },
-                      ).toList(),
-                      selectedIndex: navigationBar!.selectedIndex,
-                      onDestinationSelected:
-                          navigationBar!.onDestinationSelected,
-                      labelType: (largeScreen && drawer == null) ||
-                              navigationBar!.labelBehavior ==
-                                  NavigationDestinationLabelBehavior.alwaysHide
-                          ? NavigationRailLabelType.none
-                          : navigationBar!.labelBehavior ==
-                                  NavigationDestinationLabelBehavior.alwaysShow
-                              ? NavigationRailLabelType.all
-                              : navigationBar!.labelBehavior ==
-                                      NavigationDestinationLabelBehavior
-                                          .onlyShowSelected
-                                  ? NavigationRailLabelType.selected
-                                  : null,
-                    )
+                  : getGeneratedNavRail(bgColor, largeScreen)
             else if (!smallScreen && drawer != null)
               Padding(
                 padding: const EdgeInsets.only(right: 8),
@@ -224,104 +140,25 @@ class NinUiScaffold extends StatelessWidget {
             Expanded(
               child: Column(
                 children: [
-                  if (!smallScreen && appBar != null)
-                    AppBar(
-                      key: appBar!.key,
-                      leading: !largeScreen
-                          ? drawer != null
-                              ? null
-                              : appBar!.leading
-                          : null,
-                      automaticallyImplyLeading:
-                          appBar!.automaticallyImplyLeading,
-                      title: appBar!.title,
-                      actions: appBar!.actions == null
-                          ? null
-                          : [
-                              ...appBar!.actions!,
-                              SizedBox(
-                                width: safePadding.right > 18
-                                    ? safePadding.right + 3
-                                    : 18,
-                              )
-                            ],
-                      flexibleSpace: appBar!.flexibleSpace,
-                      bottom: appBar!.bottom,
-                      elevation: appBar!.elevation,
-                      scrolledUnderElevation: appBar!.scrolledUnderElevation,
-                      notificationPredicate: appBar!.notificationPredicate,
-                      shadowColor: appBar!.shadowColor,
-                      surfaceTintColor: appBar!.surfaceTintColor ??
-                          backgroundColor ??
-                          bgColor,
-                      shape: appBar!.shape,
-                      backgroundColor:
-                          appBar!.backgroundColor ?? backgroundColor ?? bgColor,
-                      foregroundColor: appBar!.foregroundColor,
-                      iconTheme: appBar!.iconTheme,
-                      actionsIconTheme: appBar!.actionsIconTheme,
-                      primary: appBar!.primary,
-                      centerTitle: appBar!.centerTitle,
-                      excludeHeaderSemantics: appBar!.excludeHeaderSemantics,
-                      titleSpacing: appBar!.titleSpacing,
-                      toolbarOpacity: appBar!.toolbarOpacity,
-                      bottomOpacity: appBar!.bottomOpacity,
-                      toolbarHeight: appBar!.toolbarHeight,
-                      leadingWidth: appBar!.leadingWidth,
-                      toolbarTextStyle: appBar!.toolbarTextStyle,
-                      titleTextStyle: appBar!.titleTextStyle,
-                      systemOverlayStyle: appBar!.systemOverlayStyle,
-                      forceMaterialTransparency:
-                          appBar!.forceMaterialTransparency,
-                      clipBehavior: appBar!.clipBehavior,
-                    ),
+                  if (!smallScreen && appBar != null) appBar!,
                   Expanded(
-                    child: Column(
-                      children: [
-                        if (banner != null) banner!,
-                        Expanded(
-                          child: BodyCard(
-                            margin: smallScreen
-                                ? EdgeInsets.only(
-                                    top: extendBodyBehindAppBar
-                                        ? safePadding.top > 3
-                                            ? safePadding.top
-                                            : 3
-                                        : 0,
-                                    // bottom: navigationBar != null
-                                    //     ? 0
-                                    //     : safePadding.bottom > 3
-                                    //         ? safePadding.bottom
-                                    //         : 3,
-                                    left: safePadding.left > 5
-                                        ? safePadding.left
-                                        : 5,
-                                    right: safePadding.right > 5
-                                        ? safePadding.right
-                                        : 5,
-                                  )
-                                : EdgeInsets.only(
-                                    top: extendBodyBehindAppBar
-                                        ? safePadding.top > 8
-                                            ? safePadding.top
-                                            : 8
-                                        : 0,
-                                    // bottom: safePadding.bottom > 8
-                                    //     ? safePadding.bottom
-                                    //     : 8,
-                                    left: safePadding.left > 18
-                                        ? safePadding.left + 3
-                                        : 18,
-                                    right: safePadding.right > 18
-                                        ? safePadding.right + 3
-                                        : 18,
-                                  ),
-                            child: isPageLoading == true
-                                ? loadingBody ?? const PageLoadingIndicator()
-                                : body,
+                    child: SafeArea(
+                      bottom: false,
+                      left: navigationRail == null || smallScreen,
+                      minimum: getBodyMinimumPadding(smallScreen),
+                      child: Column(
+                        children: [
+                          if (banner != null) banner!,
+                          Expanded(
+                            child: BodyCard(
+                              margin: EdgeInsets.zero,
+                              child: isPageLoading == true
+                                  ? loadingBody ?? const PageLoadingIndicator()
+                                  : body,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ],
@@ -348,6 +185,59 @@ class NinUiScaffold extends StatelessWidget {
               )
             : null,
       ),
+    );
+  }
+
+  EdgeInsets getBodyMinimumPadding(bool isSmallScreen) {
+    return EdgeInsets.only(
+      top: extendBodyBehindAppBar
+          ? isSmallScreen
+              ? 3
+              : 8
+          : 0,
+      left: navigationRail == null ? (isSmallScreen ? 5 : 18) : 3,
+      right: isSmallScreen ? 5 : 18,
+    );
+  }
+
+  NavigationRail getGeneratedNavRail(Color bgColor, bool largeScreen) {
+    return NavigationRail(
+      useIndicator: true,
+      extended:
+          //  (largeScreen && drawer == null) ? true :
+          false,
+      minExtendedWidth: 158,
+      backgroundColor: backgroundColor ?? bgColor,
+      groupAlignment: -0.95,
+      leading: floatingActionButton ??
+          (drawer != null && !largeScreen
+              ? const DrawerButton()
+              : appBar?.leading != null
+                  ? appBar!.leading
+                  : const SizedBox(height: 38)),
+      destinations: navigationBar!.destinations.map(
+        (e) {
+          NavigationDestination thisDestination = e as NavigationDestination;
+          return NavigationRailDestination(
+            icon: thisDestination.icon,
+            selectedIcon: thisDestination.selectedIcon,
+            label: Text(thisDestination.label),
+          );
+        },
+      ).toList(),
+      selectedIndex: navigationBar!.selectedIndex,
+      onDestinationSelected: navigationBar!.onDestinationSelected,
+      labelType: (largeScreen && drawer == null) ||
+              navigationBar!.labelBehavior ==
+                  NavigationDestinationLabelBehavior.alwaysHide
+          ? NavigationRailLabelType.none
+          : navigationBar!.labelBehavior ==
+                  NavigationDestinationLabelBehavior.alwaysShow
+              ? NavigationRailLabelType.all
+              : navigationBar!.labelBehavior ==
+                      NavigationDestinationLabelBehavior.onlyShowSelected
+                  ? NavigationRailLabelType.selected
+                  : null,
     );
   }
 }

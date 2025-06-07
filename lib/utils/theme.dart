@@ -18,6 +18,8 @@ ThemeData ninUiThemeData({
       );
 
   final bool isOledBlack = isOneUi && Brightness.dark == brightness;
+  final Color contentColor = getContentColor(colorSchemeGen);
+  final Color backgroundColor = getBackgroundColor(colorSchemeGen);
 
   return ThemeData(
     visualDensity: VisualDensity.standard,
@@ -32,7 +34,7 @@ ThemeData ninUiThemeData({
       },
     ),
     searchBarTheme: SearchBarThemeData(
-      backgroundColor: WidgetStatePropertyAll(getContentColor(colorSchemeGen)),
+      backgroundColor: WidgetStatePropertyAll(contentColor),
       elevation: const WidgetStatePropertyAll(0),
       constraints: const BoxConstraints(
         maxHeight: 53,
@@ -47,7 +49,8 @@ ThemeData ninUiThemeData({
     ),
     appBarTheme: AppBarTheme(
       titleSpacing: isOneUi ? 0 : null,
-      backgroundColor: getBackgroundColor(colorSchemeGen),
+      backgroundColor: backgroundColor,
+      surfaceTintColor: backgroundColor,
       foregroundColor: colorSchemeGen.onSurface,
       titleTextStyle: isOneUi
           ? TextStyle(
@@ -61,6 +64,7 @@ ThemeData ninUiThemeData({
                   color: colorSchemeGen.onSurface,
                 )
               : null,
+      actionsPadding: EdgeInsets.only(right: 5),
     ),
     inputDecorationTheme: const InputDecorationTheme(filled: true),
     textButtonTheme: TextButtonThemeData(
