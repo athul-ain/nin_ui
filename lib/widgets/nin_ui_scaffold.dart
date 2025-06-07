@@ -7,7 +7,7 @@ import 'package:nin_ui/widgets/page_loading_indicator.dart';
 
 class NinUiScaffold extends StatelessWidget {
   final Widget body;
-  final AppBar? appBar;
+  final PreferredSizeWidget? appBar;
   final Widget? drawer;
   final Widget? floatingActionButton;
   final NavigationBar? navigationBar;
@@ -126,17 +126,14 @@ class NinUiScaffold extends StatelessWidget {
         drawer: drawer != null && !largeScreen ? drawer : null,
         body: Row(
           children: [
-            if (!smallScreen &&
-                (!largeScreen || drawer == null) &&
-                navigationBar != null)
-              navigationRail != null
-                  ? navigationRail!
-                  : getGeneratedNavRail(bgColor, largeScreen)
-            else if (!smallScreen && drawer != null)
-              Padding(
-                padding: const EdgeInsets.only(right: 8),
-                child: drawer!,
-              ),
+            if (!smallScreen) ...[
+              if (navigationRail != null)
+                navigationRail!
+              else if (drawer != null && largeScreen)
+                drawer!
+              else if (navigationBar != null)
+                getGeneratedNavRail(bgColor, largeScreen)
+            ],
             Expanded(
               child: Column(
                 children: [
@@ -203,18 +200,14 @@ class NinUiScaffold extends StatelessWidget {
   NavigationRail getGeneratedNavRail(Color bgColor, bool largeScreen) {
     return NavigationRail(
       useIndicator: true,
-      extended:
-          //  (largeScreen && drawer == null) ? true :
-          false,
+      extended: false,
       minExtendedWidth: 158,
       backgroundColor: backgroundColor ?? bgColor,
       groupAlignment: -0.95,
       leading: floatingActionButton ??
           (drawer != null && !largeScreen
               ? const DrawerButton()
-              : appBar?.leading != null
-                  ? appBar!.leading
-                  : const SizedBox(height: 38)),
+              : const SizedBox(height: 38)),
       destinations: navigationBar!.destinations.map(
         (e) {
           NavigationDestination thisDestination = e as NavigationDestination;
