@@ -141,6 +141,7 @@ class NinUiScaffold extends StatelessWidget {
                   Expanded(
                     child: SafeArea(
                       bottom: false,
+                      top: appBar == null && !extendBodyBehindAppBar,
                       left: navigationRail == null || smallScreen,
                       minimum: getBodyMinimumPadding(smallScreen),
                       child: Column(
@@ -187,11 +188,7 @@ class NinUiScaffold extends StatelessWidget {
 
   EdgeInsets getBodyMinimumPadding(bool isSmallScreen) {
     return EdgeInsets.only(
-      top: extendBodyBehindAppBar
-          ? isSmallScreen
-              ? 3
-              : 8
-          : 0,
+      top: extendBodyBehindAppBar ? 0 : 3,
       left: navigationRail == null ? (isSmallScreen ? 5 : 18) : 3,
       right: isSmallScreen ? 5 : 18,
     );
