@@ -26,19 +26,19 @@ enum TileListPosition {
 }
 
 TileListPosition? getListTilePosition(int index, int length,
-    {bool hasHeader = false}) {
+    {bool hasHeader = false, bool inverse = false}) {
   if (length == 1) {
     if (hasHeader) {
-      return TileListPosition.bottom;
+      return inverse ? TileListPosition.top : TileListPosition.bottom;
     }
     return TileListPosition.single;
   } else if (index == 0) {
     if (hasHeader) {
       return TileListPosition.middle;
     }
-    return TileListPosition.top;
+    return inverse ? TileListPosition.bottom : TileListPosition.top;
   } else if (index == length - 1) {
-    return TileListPosition.bottom;
+    return inverse ? TileListPosition.top : TileListPosition.bottom;
   } else {
     return TileListPosition.middle;
   }
@@ -320,7 +320,7 @@ extension ListTileCardExtension on ListTileCard {
         onLongPress: onLongPress,
         contentPadding: contentPadding,
         horizontalTitleGap: horizontalTitleGap,
-        color: colorScheme.surfaceContainerHighest,
+        // color: colorScheme.surfaceContainerHighest,
         iconColor: iconColor,
         textColor: textColor,
         dense: dense,

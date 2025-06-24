@@ -14,9 +14,7 @@ ThemeData ninUiThemeData({
   final bool isOledBlack = isOneUi && Brightness.dark == brightness;
 
   final ColorScheme colorSchemeGen = (colorScheme ??
-      ColorScheme.fromSeed(
-        seedColor: primaryColor,
-        brightness: brightness))
+          ColorScheme.fromSeed(seedColor: primaryColor, brightness: brightness))
       .copyWith(surface: isOledBlack ? Colors.black : null);
 
   final Color contentColor = getContentColor(colorSchemeGen);
@@ -65,7 +63,10 @@ ThemeData ninUiThemeData({
               : null,
       actionsPadding: EdgeInsets.only(right: 5),
     ),
-    inputDecorationTheme: const InputDecorationTheme(filled: true),
+    inputDecorationTheme: InputDecorationTheme(
+      filled: true,
+      fillColor: contentColor,
+    ),
     textButtonTheme: TextButtonThemeData(
       style: TextButton.styleFrom(
         shape: RoundedRectangleBorder(
