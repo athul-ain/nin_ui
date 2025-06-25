@@ -63,6 +63,9 @@ ThemeData ninUiThemeData({
               : null,
       actionsPadding: EdgeInsets.only(right: 5),
     ),
+    navigationDrawerTheme: NavigationDrawerThemeData(
+      backgroundColor: isOledBlack ? Colors.black : null,
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: contentColor,
