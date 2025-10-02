@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-errorLog(String message, {String? name}) {
+void errorLog(String message, {String? name}) {
   log(
     redString(message),
     name: redString(name ?? 'errorLog'),
