@@ -25,11 +25,11 @@ ThemeData ninUiThemeData({
     materialTapTargetSize: MaterialTapTargetSize.padded,
     colorScheme: colorSchemeGen,
     useMaterial3: true,
-    pageTransitionsTheme: const PageTransitionsTheme(
-      builders: {
-        TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
-      },
-    ),
+    // pageTransitionsTheme: const PageTransitionsTheme(
+    //   builders: {
+    //     TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+    //   },
+    // ),
     searchBarTheme: SearchBarThemeData(
       backgroundColor: WidgetStatePropertyAll(contentColor),
       elevation: const WidgetStatePropertyAll(0),

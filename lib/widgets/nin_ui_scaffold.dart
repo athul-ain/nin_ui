@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:nin_ui/nin_ui.dart';
-import 'package:nin_ui/utils/color.dart';
-import 'package:nin_ui/utils/size.dart';
-import 'package:nin_ui/widgets/page_loading_indicator.dart';
+
+import '../utils/color.dart';
+import '../utils/size.dart';
+import 'body_card.dart';
+import 'page_loading_indicator.dart';
+
+const double _kRailMinWidth = 158.0;
+const double _kRailLeadingHeight = 38.0;
+const double _kBodyPaddingSmall = 5.0;
+const double _kBodyPaddingLarge = 18.0;
+const double _kBodyTopPadding = 3.0;
 
 class NinUiScaffold extends StatelessWidget {
   final Widget body;
@@ -124,45 +131,21 @@ class NinUiScaffold extends StatelessWidget {
         extendBodyBehindAppBar: extendBodyBehindAppBar,
         appBar: appBar != null && smallScreen ? appBar! : null,
         drawer: drawer != null && !largeScreen ? drawer : null,
-        body: Row(
-          children: [
-            if (!smallScreen) ...[
-              if (navigationRail != null)
-                navigationRail!
-              else if (drawer != null && largeScreen)
-                drawer!
-              else if (navigationBar != null)
-                getGeneratedNavRail(bgColor, largeScreen)
-            ],
-            Expanded(
-              child: Column(
-                children: [
-                  if (!smallScreen && appBar != null) appBar!,
-                  Expanded(
-                    child: SafeArea(
-                      bottom: false,
-                      top: appBar == null && !extendBodyBehindAppBar,
-                      left: navigationRail == null || smallScreen,
-                      minimum: getBodyMinimumPadding(smallScreen),
-                      child: Column(
-                        children: [
-                          if (banner != null) banner!,
-                          Expanded(
-                            child: BodyCard(
-                              margin: EdgeInsets.zero,
-                              child: isPageLoading == true
-                                  ? loadingBody ?? const PageLoadingIndicator()
-                                  : body,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        body: _NinUiBody(
+          smallScreen: smallScreen,
+          largeScreen: largeScreen,
+          navigationRail: navigationRail,
+          drawer: drawer,
+          navigationBar: navigationBar,
+          bgColor: bgColor,
+          appBar: appBar,
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
+          banner: banner,
+          isPageLoading: isPageLoading,
+          loadingBody: loadingBody,
+          body: body,
+          floatingActionButton: floatingActionButton,
+          backgroundColor: backgroundColor,
         ),
         floatingActionButton: (navigationBar != null && !smallScreen)
             ? null
@@ -185,46 +168,159 @@ class NinUiScaffold extends StatelessWidget {
       ),
     );
   }
+}
 
-  EdgeInsets getBodyMinimumPadding(bool isSmallScreen) {
-    return EdgeInsets.only(
-      top: extendBodyBehindAppBar ? 0 : 3,
-      left: navigationRail == null ? (isSmallScreen ? 5 : 18) : 3,
-      right: isSmallScreen ? 5 : 18,
+class _NinUiBody extends StatelessWidget {
+  const _NinUiBody({
+    required this.smallScreen,
+    required this.largeScreen,
+    required this.navigationRail,
+    required this.drawer,
+    required this.navigationBar,
+    required this.bgColor,
+    required this.appBar,
+    required this.extendBodyBehindAppBar,
+    required this.banner,
+    required this.isPageLoading,
+    required this.loadingBody,
+    required this.body,
+    required this.floatingActionButton,
+    required this.backgroundColor,
+  });
+
+  final bool smallScreen;
+  final bool largeScreen;
+  final Widget? navigationRail;
+  final Widget? drawer;
+  final NavigationBar? navigationBar;
+  final Color bgColor;
+  final PreferredSizeWidget? appBar;
+  final bool extendBodyBehindAppBar;
+  final Widget? banner;
+  final bool? isPageLoading;
+  final Widget? loadingBody;
+  final Widget body;
+  final Widget? floatingActionButton;
+  final Color? backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        if (!smallScreen) ...[
+          if (navigationRail != null)
+            navigationRail!
+          else if (drawer != null && largeScreen)
+            drawer!
+          else if (navigationBar != null)
+            _NinUiNavRail(
+              navigationBar: navigationBar!,
+              bgColor: bgColor,
+              largeScreen: largeScreen,
+              drawer: drawer,
+              floatingActionButton: floatingActionButton,
+              backgroundColor: backgroundColor,
+            )
+        ],
+        Expanded(
+          child: Column(
+            children: [
+              if (!smallScreen && appBar != null) appBar!,
+              Expanded(
+                child: SafeArea(
+                  bottom: false,
+                  top: appBar == null && !extendBodyBehindAppBar,
+                  left: navigationRail == null || smallScreen,
+                  minimum: _getBodyMinimumPadding(smallScreen),
+                  child: Column(
+                    children: [
+                      if (banner != null) banner!,
+                      Expanded(
+                        child: BodyCard(
+                          margin: EdgeInsets.zero,
+                          child: isPageLoading == true
+                              ? loadingBody ?? const PageLoadingIndicator()
+                              : body,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
-  NavigationRail getGeneratedNavRail(Color bgColor, bool largeScreen) {
+  EdgeInsets _getBodyMinimumPadding(bool isSmallScreen) {
+    return EdgeInsets.only(
+      top: extendBodyBehindAppBar ? 0 : _kBodyTopPadding,
+      left: navigationRail == null
+          ? (isSmallScreen ? _kBodyPaddingSmall : _kBodyPaddingLarge)
+          : _kBodyTopPadding,
+      right: isSmallScreen ? _kBodyPaddingSmall : _kBodyPaddingLarge,
+    );
+  }
+}
+
+class _NinUiNavRail extends StatelessWidget {
+  const _NinUiNavRail({
+    required this.navigationBar,
+    required this.bgColor,
+    required this.largeScreen,
+    required this.drawer,
+    required this.floatingActionButton,
+    required this.backgroundColor,
+  });
+
+  final NavigationBar navigationBar;
+  final Color bgColor;
+  final bool largeScreen;
+  final Widget? drawer;
+  final Widget? floatingActionButton;
+  final Color? backgroundColor;
+
+  @override
+  Widget build(BuildContext context) {
     return NavigationRail(
       useIndicator: true,
       extended: false,
-      minExtendedWidth: 158,
+      minExtendedWidth: _kRailMinWidth,
       backgroundColor: backgroundColor ?? bgColor,
       groupAlignment: -0.95,
       leading: floatingActionButton ??
           (drawer != null && !largeScreen
               ? const DrawerButton()
-              : const SizedBox(height: 38)),
-      destinations: navigationBar!.destinations.map(
+              : const SizedBox(height: _kRailLeadingHeight)),
+      destinations: navigationBar.destinations.map(
         (e) {
-          NavigationDestination thisDestination = e as NavigationDestination;
-          return NavigationRailDestination(
-            icon: thisDestination.icon,
-            selectedIcon: thisDestination.selectedIcon,
-            label: Text(thisDestination.label),
+          // Assuming destinations are NavigationDestination, which is standard for NavigationBar
+          if (e is NavigationDestination) {
+            return NavigationRailDestination(
+              icon: e.icon,
+              selectedIcon: e.selectedIcon,
+              label: Text(e.label),
+            );
+          }
+          // Fallback or handle other types if necessary, though NavigationBar usually takes NavigationDestination
+          return const NavigationRailDestination(
+            icon: SizedBox(),
+            label: Text(''),
           );
         },
       ).toList(),
-      selectedIndex: navigationBar!.selectedIndex,
-      onDestinationSelected: navigationBar!.onDestinationSelected,
+      selectedIndex: navigationBar.selectedIndex,
+      onDestinationSelected: navigationBar.onDestinationSelected,
       labelType: (largeScreen && drawer == null) ||
-              navigationBar!.labelBehavior ==
+              navigationBar.labelBehavior ==
                   NavigationDestinationLabelBehavior.alwaysHide
           ? NavigationRailLabelType.none
-          : navigationBar!.labelBehavior ==
+          : navigationBar.labelBehavior ==
                   NavigationDestinationLabelBehavior.alwaysShow
               ? NavigationRailLabelType.all
-              : navigationBar!.labelBehavior ==
+              : navigationBar.labelBehavior ==
                       NavigationDestinationLabelBehavior.onlyShowSelected
                   ? NavigationRailLabelType.selected
                   : null,
