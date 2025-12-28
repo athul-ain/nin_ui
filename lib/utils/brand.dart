@@ -1,34 +1,63 @@
-import 'dart:async';
+import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
-import 'package:device_info_plus/device_info_plus.dart';
+
+import 'package:ffi/ffi.dart';
 import 'package:flutter/foundation.dart';
 
-class BrandDetector {
-  final _controller = StreamController<bool>.broadcast();
-  Stream<bool> get isOneUi => _controller.stream;
+typedef _SystemPropertyGetNative = Int32 Function(
+    Pointer<Utf8> name, Pointer<Utf8> value);
+typedef _SystemPropertyGetDart = int Function(
+    Pointer<Utf8> name, Pointer<Utf8> value);
 
-  String? _brand;
-  String? get brand => _brand;
+class BrandDetector {
+  late final String? brand;
+  late final bool isOneUi;
 
   BrandDetector() {
-    _controller.add(false); // Default value
-    _checkOneUi();
+    _detect();
   }
 
-  Future<void> _checkOneUi() async {
-    if (kIsWeb) return;
-
-    final deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid) {
-      final androidInfo = await deviceInfo.androidInfo;
-      _brand = androidInfo.brand;
-    } else if (Platform.isIOS || Platform.isMacOS) {
-      _brand = "Apple";
+  void _detect() {
+    if (kIsWeb) {
+      brand = null;
+      isOneUi = false;
+      return;
     }
-    _controller.add(_brand == 'samsung');
-  }
 
-  void dispose() {
-    _controller.close();
+    if (Platform.isAndroid) {
+      try {
+        final dylib = DynamicLibrary.open('libc.so');
+        final systemPropertyGet = dylib
+            .lookup<NativeFunction<_SystemPropertyGetNative>>(
+                '__system_property_get')
+            .asFunction<_SystemPropertyGetDart>();
+
+        final namePtr = 'ro.product.brand'.toNativeUtf8();
+        final valuePtr = calloc<Int8>(92); // PROP_VALUE_MAX
+
+        final length = systemPropertyGet(namePtr, valuePtr.cast());
+        if (length > 0) {
+          brand = valuePtr.cast<Utf8>().toDartString();
+        } else {
+          brand = null;
+        }
+
+        calloc.free(namePtr);
+        calloc.free(valuePtr);
+      } catch (e) {
+        if (kDebugMode) {
+          print('Error detecting brand: $e');
+        }
+        brand = null;
+      }
+    } else if (Platform.isIOS || Platform.isMacOS) {
+      brand = 'Apple';
+    } else {
+      brand = null;
+    }
+    log('Brand: $brand');
+
+    isOneUi = brand == 'samsung';
   }
 }
