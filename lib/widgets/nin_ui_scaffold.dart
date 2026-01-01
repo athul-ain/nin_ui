@@ -112,8 +112,8 @@ class NinUiScaffold extends StatelessWidget {
     final iconBrightness = theme.brightness == Brightness.dark
         ? Brightness.light
         : Brightness.dark;
-    final bool smallScreen = isSmallScreen(context);
-    final bool largeScreen = isLargeScreen(context);
+    final bool smallScreen = context.isSmallWidth;
+    final bool largeScreen = context.isLargeWidth;
 
     return AnnotatedRegion<SystemUiOverlayStyle>(
       value: SystemUiOverlayStyle(
