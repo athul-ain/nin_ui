@@ -10,19 +10,46 @@ typedef _SystemPropertyGetNative = Int32 Function(
 typedef _SystemPropertyGetDart = int Function(
     Pointer<Utf8> name, Pointer<Utf8> value);
 
+/// Initialise the brand detector before using it
+///
+/// ```dart
+/// await BrandDetector.initialise();
+/// ```
 class BrandDetector {
-  late final String? brand;
-  late final bool isOneUi;
+  static BrandDetector? _instance;
 
-  BrandDetector() {
-    _detect();
+  final String? brand;
+  final bool isOneUiSystem;
+
+  static bool get isOneUi => _instance?.isOneUiSystem ?? false;
+
+  const BrandDetector._(this.brand, this.isOneUiSystem);
+
+  factory BrandDetector() {
+    if (_instance != null) {
+      return _instance!;
+    }
+    final (brand, isOneUiSystem) = _detect();
+    return BrandDetector._(brand, isOneUiSystem);
   }
 
-  void _detect() {
+  static Future<void> initialise(
+      {bool disableOneUiCustomisation = false}) async {
+    if (_instance != null) return;
+
+    final (brand, isOneUiSystem) =
+        _detect(disableOneUiCustomisation: disableOneUiCustomisation);
+    _instance = BrandDetector._(brand, isOneUiSystem);
+  }
+
+  static (String? brand, bool isOneUiSystem) _detect(
+      {bool disableOneUiCustomisation = false}) {
+    log('Detecting brand...');
+    String? brand;
+    bool isOneUiSystem = disableOneUiCustomisation;
+
     if (kIsWeb) {
-      brand = null;
-      isOneUi = false;
-      return;
+      return (null, false);
     }
 
     if (Platform.isAndroid) {
@@ -58,6 +85,7 @@ class BrandDetector {
     }
     log('Brand: $brand');
 
-    isOneUi = brand == 'samsung';
+    isOneUiSystem = brand == 'samsung';
+    return (brand, isOneUiSystem);
   }
 }

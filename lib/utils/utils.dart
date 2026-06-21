@@ -42,3 +42,8 @@ String whiteString(String name) {
 String blackString(String name) {
   return '\x1B[30m$name\x1B[0m';
 }
+
+RegExp emailRegex = RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$");
+bool validateEmail(String email) {
+  return emailRegex.hasMatch(email);
+}
