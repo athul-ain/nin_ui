@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'content_card.dart';
+import 'list_tile_card.dart';
 import 'dart:developer';
 
 class ExpandedListTileCard extends StatefulWidget {
@@ -16,6 +17,9 @@ class ExpandedListTileCard extends StatefulWidget {
     this.topHorizontalTitleGap,
     this.color,
     this.isExpanded,
+    this.position = TileListPosition.single,
+    this.borderRadius,
+    this.margin,
   });
   final Widget? leading;
   final Widget? title;
@@ -28,22 +32,50 @@ class ExpandedListTileCard extends StatefulWidget {
   final bool? automaticallyImplyTrailing;
   final Color? color;
   final bool? isExpanded;
+  final TileListPosition? position;
+  final BorderRadiusGeometry? borderRadius;
+  final EdgeInsetsGeometry? margin;
 
   @override
   State<ExpandedListTileCard> createState() => _ExpandedListTileCardState();
 }
 
 class _ExpandedListTileCardState extends State<ExpandedListTileCard> {
-  bool isInsightsWidgetExpanded = false;
+  late bool isInsightsWidgetExpanded;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    isInsightsWidgetExpanded = widget.isExpanded ?? false;
+  }
+
+  @override
+  void didUpdateWidget(covariant ExpandedListTileCard oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (widget.isExpanded != oldWidget.isExpanded && widget.isExpanded != null) {
       setState(() {
-        isInsightsWidgetExpanded = widget.isExpanded ?? false;
+        isInsightsWidgetExpanded = widget.isExpanded!;
       });
-    });
+    }
+  }
+
+  BorderRadiusGeometry? _getBorderRadius() {
+    if (isInsightsWidgetExpanded) {
+      return widget.borderRadius;
+    } else {
+      return (widget.position ?? TileListPosition.single)
+          .getBorderRadius(customBorderRadius: widget.borderRadius);
+    }
+  }
+
+  EdgeInsetsGeometry _getMargin() {
+    if (isInsightsWidgetExpanded) {
+      return widget.margin ??
+          const EdgeInsets.only(left: 0.5, right: 0.5, top: 0, bottom: 5);
+    } else {
+      return (widget.position ?? TileListPosition.single)
+          .getMargin(customMargin: widget.margin);
+    }
   }
 
   @override
@@ -51,6 +83,8 @@ class _ExpandedListTileCardState extends State<ExpandedListTileCard> {
     log(isInsightsWidgetExpanded.toString());
     return ContentCard(
       color: widget.color,
+      borderRadius: _getBorderRadius(),
+      margin: _getMargin(),
       child: AnimatedSize(
         duration: const Duration(milliseconds: 188),
         alignment: Alignment.topCenter,

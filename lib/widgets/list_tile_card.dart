@@ -44,71 +44,10 @@ TileListPosition? getListTilePosition(int index, int length,
   }
 }
 
-class ListTileCard extends StatefulWidget {
-  final Widget? title;
-  final Widget? leading;
-  final Widget? subtitle;
-  final Widget? trailing;
-  final Color? color;
-  final Gradient? gradient;
-  final Color? iconColor;
-  final Color? textColor;
-  final TileListPosition? position;
-  final GestureTapCallback? onTap;
-  final GestureLongPressCallback? onLongPress;
-  final EdgeInsetsGeometry? contentPadding;
-  final double? horizontalTitleGap;
-  final bool dense;
-  final BorderRadiusGeometry? borderRadius;
-  final double? minTileHeight;
-  final EdgeInsetsGeometry? margin;
-  final Duration animationDuration;
-
-  const ListTileCard({
-    super.key,
-    this.title,
-    this.leading,
-    this.subtitle,
-    this.trailing,
-    this.onTap,
-    this.onLongPress,
-    this.contentPadding,
-    this.horizontalTitleGap,
-    this.color,
-    this.gradient,
-    this.iconColor,
-    this.textColor,
-    this.dense = false,
-    this.borderRadius,
-    this.position = TileListPosition.single,
-    this.minTileHeight,
-    this.margin,
-    this.animationDuration = Durations.short3,
-  }) : assert(color == null || gradient == null,
-            'Cannot provide both a color and a gradient');
-
-  @override
-  State<ListTileCard> createState() => _ListTileCardState();
-}
-
-class _ListTileCardState extends State<ListTileCard> {
-  double _scale = 1.0;
-
-  void _onTapDown(TapDownDetails details) {
-    setState(() => _scale = 0.988);
-  }
-
-  void _onTapUp(TapUpDetails details) {
-    setState(() => _scale = 1.0);
-  }
-
-  void _onTapCancel() {
-    setState(() => _scale = 1.0);
-  }
-
-  BorderRadiusGeometry _getBorderRadius() {
-    if (widget.borderRadius != null) return widget.borderRadius!;
-    switch (widget.position) {
+extension TileListPositionExtension on TileListPosition {
+  BorderRadiusGeometry getBorderRadius({BorderRadiusGeometry? customBorderRadius}) {
+    if (customBorderRadius != null) return customBorderRadius;
+    switch (this) {
       case TileListPosition.single:
         return const BorderRadius.all(Radius.circular(13));
       case TileListPosition.middle:
@@ -211,15 +150,12 @@ class _ListTileCardState extends State<ListTileCard> {
           bottomLeft: Radius.circular(3),
           bottomRight: Radius.circular(3),
         );
-      default:
-        return BorderRadius.circular(13);
     }
   }
 
-  EdgeInsetsGeometry _getMargin() {
-    if (widget.margin != null) return widget.margin!;
-
-    switch (widget.position) {
+  EdgeInsetsGeometry getMargin({EdgeInsetsGeometry? customMargin}) {
+    if (customMargin != null) return customMargin;
+    switch (this) {
       case TileListPosition.single:
         return const EdgeInsets.fromLTRB(0.5, 0, 0.5, 5);
       case TileListPosition.middle:
@@ -254,10 +190,80 @@ class _ListTileCardState extends State<ListTileCard> {
         return const EdgeInsets.fromLTRB(.5, 0, 0.5, 5);
       case TileListPosition.singleCenter:
         return const EdgeInsets.fromLTRB(.5, 0, .5, 5);
-
-      default:
-        return const EdgeInsets.fromLTRB(0.5, 0, 0.5, 5);
     }
+  }
+}
+
+class ListTileCard extends StatefulWidget {
+  final Widget? title;
+  final Widget? leading;
+  final Widget? subtitle;
+  final Widget? trailing;
+  final Color? color;
+  final Gradient? gradient;
+  final Color? iconColor;
+  final Color? textColor;
+  final TileListPosition? position;
+  final GestureTapCallback? onTap;
+  final GestureLongPressCallback? onLongPress;
+  final EdgeInsetsGeometry? contentPadding;
+  final double? horizontalTitleGap;
+  final bool dense;
+  final BorderRadiusGeometry? borderRadius;
+  final double? minTileHeight;
+  final EdgeInsetsGeometry? margin;
+  final Duration animationDuration;
+
+  const ListTileCard({
+    super.key,
+    this.title,
+    this.leading,
+    this.subtitle,
+    this.trailing,
+    this.onTap,
+    this.onLongPress,
+    this.contentPadding,
+    this.horizontalTitleGap,
+    this.color,
+    this.gradient,
+    this.iconColor,
+    this.textColor,
+    this.dense = false,
+    this.borderRadius,
+    this.position = TileListPosition.single,
+    this.minTileHeight,
+    this.margin,
+    this.animationDuration = Durations.short3,
+  }) : assert(color == null || gradient == null,
+            'Cannot provide both a color and a gradient');
+
+  @override
+  State<ListTileCard> createState() => _ListTileCardState();
+}
+
+class _ListTileCardState extends State<ListTileCard> {
+  double _scale = 1.0;
+
+  void _onTapDown(TapDownDetails details) {
+    setState(() => _scale = 0.988);
+  }
+
+  void _onTapUp(TapUpDetails details) {
+    setState(() => _scale = 1.0);
+  }
+
+  void _onTapCancel() {
+    setState(() => _scale = 1.0);
+  }
+
+  BorderRadiusGeometry _getBorderRadius() {
+    return (widget.position ?? TileListPosition.single)
+        .getBorderRadius(customBorderRadius: widget.borderRadius);
+  }
+
+  EdgeInsetsGeometry _getMargin() {
+    return (widget.position ?? TileListPosition.single)
+        .getMargin(customMargin: widget.margin);
   }
 
   @override
