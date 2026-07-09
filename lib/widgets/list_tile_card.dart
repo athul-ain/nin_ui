@@ -45,7 +45,8 @@ TileListPosition? getListTilePosition(int index, int length,
 }
 
 extension TileListPositionExtension on TileListPosition {
-  BorderRadiusGeometry getBorderRadius({BorderRadiusGeometry? customBorderRadius}) {
+  BorderRadiusGeometry getBorderRadius(
+      {BorderRadiusGeometry? customBorderRadius}) {
     if (customBorderRadius != null) return customBorderRadius;
     switch (this) {
       case TileListPosition.single:
@@ -195,6 +196,8 @@ extension TileListPositionExtension on TileListPosition {
 }
 
 class ListTileCard extends StatefulWidget {
+  /// When a Child widget is passed title,leading,subtitle and trailing will be ignored
+  final Widget? child;
   final Widget? title;
   final Widget? leading;
   final Widget? subtitle;
@@ -216,6 +219,7 @@ class ListTileCard extends StatefulWidget {
 
   const ListTileCard({
     super.key,
+    this.child,
     this.title,
     this.leading,
     this.subtitle,
@@ -283,21 +287,22 @@ class _ListTileCardState extends State<ListTileCard> {
         child: AnimatedScale(
           scale: _scale,
           duration: Durations.short3,
-          child: ListTile(
-            minTileHeight: widget.minTileHeight,
-            dense: widget.dense,
-            iconColor: widget.iconColor,
-            textColor: widget.textColor,
-            leading: widget.leading,
-            title: widget.title,
-            subtitle: widget.subtitle,
-            trailing: widget.trailing,
-            onTap: widget.onLongPress == null ? null : widget.onTap,
-            onLongPress: widget.onLongPress,
-            contentPadding: widget.contentPadding ??
-                const EdgeInsets.only(right: 8, left: 15),
-            horizontalTitleGap: widget.horizontalTitleGap ?? 15,
-          ),
+          child: widget.child ??
+              ListTile(
+                minTileHeight: widget.minTileHeight,
+                dense: widget.dense,
+                iconColor: widget.iconColor,
+                textColor: widget.textColor,
+                leading: widget.leading,
+                title: widget.title,
+                subtitle: widget.subtitle,
+                trailing: widget.trailing,
+                onTap: widget.onLongPress == null ? null : widget.onTap,
+                onLongPress: widget.onLongPress,
+                contentPadding: widget.contentPadding ??
+                    const EdgeInsets.only(right: 8, left: 15),
+                horizontalTitleGap: widget.horizontalTitleGap ?? 15,
+              ),
         ),
       ),
     );
