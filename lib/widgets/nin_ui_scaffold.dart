@@ -148,7 +148,10 @@ class NinUiScaffold extends StatelessWidget {
           floatingActionButton: floatingActionButton,
           backgroundColor: backgroundColor,
         ),
-        floatingActionButton: (navigationBar != null && !smallScreen)
+        floatingActionButton: (navigationRail == null &&
+                (drawer == null || !largeScreen) &&
+                navigationBar != null &&
+                !smallScreen)
             ? null
             : floatingActionButton,
         floatingActionButtonLocation: floatingActionButtonLocation,

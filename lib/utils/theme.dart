@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:fluentui_system_icons/fluentui_system_icons.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nin_ui/utils/brand.dart';
@@ -168,12 +167,12 @@ class NinUiTheme {
     return ActionIconThemeData(
       backButtonIconBuilder: (context) {
         if (kIsWeb || Platform.isWindows) {
-          return const Icon(FluentIcons.arrow_left_48_regular);
+          return const Icon(Icons.arrow_back);
         }
         if (BrandDetector.isOneUi) {
           return const Icon(
-            FluentIcons.chevron_left_16_regular,
-            size: 27,
+            Icons.chevron_left_rounded,
+            size: 28,
           );
         }
         if (Platform.isMacOS || Platform.isIOS) {
