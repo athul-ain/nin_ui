@@ -7,12 +7,14 @@ class BottomSheetAppBar extends StatelessWidget {
     this.actions,
     this.backgroundColor,
     this.automaticallyImplyLeading = true,
+    this.showDragHandle = true,
   });
 
   final String title;
   final List<Widget>? actions;
   final Color? backgroundColor;
   final bool automaticallyImplyLeading;
+  final bool showDragHandle;
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +27,22 @@ class BottomSheetAppBar extends StatelessWidget {
       right: 0,
       child: Column(
         children: [
-          Container(
-            color: backgroundColor ?? bottomSheetTheme.backgroundColor,
-            padding: const EdgeInsets.only(top: 11),
-            child: Center(
-              child: Container(
-                height: 3,
-                width: 35,
-                decoration: BoxDecoration(
-                  color: bottomSheetTheme.dragHandleColor ??
-                      colorScheme.onSurfaceVariant,
-                  borderRadius: BorderRadius.circular(1.5),
+          if (showDragHandle)
+            Container(
+              color: backgroundColor ?? bottomSheetTheme.backgroundColor,
+              padding: const EdgeInsets.only(top: 11),
+              child: Center(
+                child: Container(
+                  height: 3,
+                  width: 35,
+                  decoration: BoxDecoration(
+                    color: bottomSheetTheme.dragHandleColor ??
+                        colorScheme.onSurfaceVariant,
+                    borderRadius: BorderRadius.circular(1.5),
+                  ),
                 ),
               ),
             ),
-          ),
           AppBar(
             toolbarHeight: 50,
             centerTitle: true,

@@ -5,6 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:nin_ui/utils/brand.dart';
 import 'color.dart';
+import 'motion.dart';
 
 class NinUiTheme {
   static ThemeData create({
@@ -30,6 +31,15 @@ class NinUiTheme {
       materialTapTargetSize: MaterialTapTargetSize.padded,
       colorScheme: colorSchemeGen,
       useMaterial3: true,
+      pageTransitionsTheme: const PageTransitionsTheme(
+        builders: {
+          TargetPlatform.android: PredictiveBackPageTransitionsBuilder(),
+          TargetPlatform.iOS: M3SharedAxisPageTransitionsBuilder(),
+          TargetPlatform.windows: M3SharedAxisPageTransitionsBuilder(),
+          TargetPlatform.macOS: M3SharedAxisPageTransitionsBuilder(),
+          TargetPlatform.linux: M3SharedAxisPageTransitionsBuilder(),
+        },
+      ),
       searchBarTheme: _searchBarTheme(contentColor),
       cardTheme: _cardTheme(),
       appBarTheme: _appBarTheme(
@@ -58,6 +68,10 @@ class NinUiTheme {
       bottomSheetTheme: BottomSheetThemeData(
         backgroundColor: colorSchemeGen.surfaceContainer,
         clipBehavior: Clip.antiAlias,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(top: Radius.circular(24)),
+        ),
+        showDragHandle: false,
       ),
       dialogTheme: DialogThemeData(
         backgroundColor: BrandDetector.isOneUi
@@ -66,8 +80,9 @@ class NinUiTheme {
                 : OneUiColors.dialogBgLight
             : null,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(BrandDetector.isOneUi ? 15 : 28),
         ),
+        elevation: 6,
       ),
       popupMenuTheme: BrandDetector.isOneUi
           ? PopupMenuThemeData(
@@ -105,15 +120,6 @@ class NinUiTheme {
               ),
             )
           : null,
-
-      // pageTransitionsTheme: PageTransitionsTheme(
-      //   builders: {
-      // //TODO:// Add Custom OneUi page transitions
-      //     TargetPlatform.android: isOneUiDetected
-      //         ? CupertinoPageTransitionsBuilder()
-      //         : PredictiveBackPageTransitionsBuilder(),
-      //     TargetPlatform.iOS: CupertinoPageTransitionsBuilder(),
-      //   },)
     );
   }
 

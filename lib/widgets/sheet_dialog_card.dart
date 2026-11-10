@@ -1,6 +1,7 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:nin_ui/utils/color.dart';
+import 'm3_predictive_back.dart';
 
 class SheetDialogCard extends StatelessWidget {
   const SheetDialogCard({
@@ -19,25 +20,27 @@ class SheetDialogCard extends StatelessWidget {
     final viewInsets = MediaQuery.viewInsetsOf(context);
     final genColor = getCupertinoSheetBackgroundColor(context);
 
-    return Container(
-      margin: EdgeInsets.only(
-        bottom: devicePadding.bottom + 16 + viewInsets.bottom,
-        left: 16,
-        right: 16,
-      ),
-      clipBehavior: Clip.antiAlias,
-      decoration: BoxDecoration(
-        color: Colors.transparent,
-        borderRadius: BorderRadius.circular(borderRadius),
-      ),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          decoration: BoxDecoration(
-            color: backgroundColor ?? genColor,
-            borderRadius: BorderRadius.circular(borderRadius),
+    return M3PredictiveBackDialog(
+      child: Container(
+        margin: EdgeInsets.only(
+          bottom: devicePadding.bottom + 16 + viewInsets.bottom,
+          left: 16,
+          right: 16,
+        ),
+        clipBehavior: Clip.antiAlias,
+        decoration: BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.circular(borderRadius),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            decoration: BoxDecoration(
+              color: backgroundColor ?? genColor,
+              borderRadius: BorderRadius.circular(borderRadius),
+            ),
+            child: child,
           ),
-          child: child,
         ),
       ),
     );

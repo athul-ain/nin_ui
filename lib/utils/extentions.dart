@@ -1,6 +1,8 @@
 import 'package:date_time_format/date_time_format.dart';
 import 'package:flutter/material.dart';
 import 'package:nin_ui/utils/color.dart';
+import 'package:nin_ui/utils/motion.dart';
+import 'package:nin_ui/widgets/m3_predictive_back.dart';
 import 'package:nin_ui/widgets/sheet_dialog_card.dart';
 
 extension StringExtension on String? {
@@ -317,18 +319,28 @@ extension WidgetExtension on Widget {
     bool isDismissible = true,
     Color? backgroundColor,
     Color? barrierColor,
+    AnimationStyle? sheetAnimationStyle,
   }) {
-    return showModalBottomSheet(
-      context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      isDismissible: isDismissible,
-      backgroundColor: Colors.transparent,
-      barrierColor: barrierColor ?? getCupertinoBarrierColor(context),
-      barrierLabel: title,
-      builder: (BuildContext context) => SheetDialogCard(
-        backgroundColor: backgroundColor,
-        child: this,
+    final navigator = Navigator.of(context);
+    return navigator.push<T>(
+      M3ModalBottomSheetRoute<T>(
+        builder: (BuildContext context) => SheetDialogCard(
+          backgroundColor: backgroundColor,
+          child: this,
+        ),
+        capturedThemes:
+            InheritedTheme.capture(from: context, to: navigator.context),
+        isScrollControlled: true,
+        useSafeArea: true,
+        isDismissible: isDismissible,
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        barrierLabel: title ??
+            MaterialLocalizations.of(context).modalBarrierDismissLabel,
+        modalBarrierColor:
+            barrierColor ?? getCupertinoBarrierColor(context),
+        sheetAnimationStyle:
+            sheetAnimationStyle ?? M3Motion.sheetAnimationStyle,
       ),
     );
   }
@@ -339,16 +351,44 @@ extension WidgetExtension on Widget {
     bool isDismissible = true,
     Color? backgroundColor,
     Color? barrierColor,
+    AnimationStyle? sheetAnimationStyle,
   }) {
-    return showModalBottomSheet(
+    return showM3BottomSheet<T>(
       context: context,
-      isScrollControlled: true,
-      useSafeArea: true,
-      barrierLabel: title,
+      child: this,
+      title: title,
       isDismissible: isDismissible,
       backgroundColor: backgroundColor,
       barrierColor: barrierColor,
-      builder: (BuildContext context) => this,
+      sheetAnimationStyle: sheetAnimationStyle,
+    );
+  }
+
+  /// Displays this widget as a Material 3 dialog with scale (0.85 -> 1.0) and fade transition.
+  Future<T?> showM3Dialog<T>(
+    BuildContext context, {
+    bool barrierDismissible = true,
+    Color? barrierColor,
+    bool useRootNavigator = true,
+    RouteSettings? routeSettings,
+  }) {
+    return showGeneralDialog<T>(
+      context: context,
+      barrierDismissible: barrierDismissible,
+      barrierLabel: MaterialLocalizations.of(context).modalBarrierDismissLabel,
+      barrierColor: barrierColor ?? Colors.black.withValues(alpha: 0.35),
+      useRootNavigator: useRootNavigator,
+      routeSettings: routeSettings,
+      transitionDuration: M3Motion.short4, // 200ms
+      pageBuilder: (context, anim, secAnim) =>
+          M3PredictiveBackDialog(child: this),
+      transitionBuilder: (context, anim, secAnim, child) {
+        return M3Motion.dialogTransition(
+          context: context,
+          animation: anim,
+          child: child,
+        );
+      },
     );
   }
 }

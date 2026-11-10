@@ -54,59 +54,59 @@ class BottomsheetWrapper extends StatelessWidget {
       bottom: bottomPadding + (hideSearchBar ? 8 : 70),
     );
     return Stack(
-      alignment: Alignment.bottomCenter,
-      children: [
-        if (children.length < 30)
-          SingleChildScrollView(
-            padding: listPadding,
-            child: Column(children: children),
-          )
-        else
-          ListView.builder(
-            padding: listPadding,
-            itemCount: children.length,
-            itemBuilder: (_, index) {
-              return children[index];
-            },
-          ),
-        BottomSheetAppBar(title: title, actions: actions),
-        if (!hideSearchBar)
-          Container(
-            width: double.infinity,
-            height: bottomPadding + 34,
-            decoration: BoxDecoration(
-              color: bottomSheetTheme.backgroundColor,
-              boxShadow: [
-                BoxShadow(
-                  color: bottomSheetTheme.backgroundColor ??
-                      Colors.black.withAlpha(180),
-                  blurRadius: 18,
-                  offset: const Offset(0, -18),
-                ),
-              ],
+        alignment: Alignment.bottomCenter,
+        children: [
+          if (children.length < 30)
+            SingleChildScrollView(
+              padding: listPadding,
+              child: Column(children: children),
+            )
+          else
+            ListView.builder(
+              padding: listPadding,
+              itemCount: children.length,
+              itemBuilder: (_, index) {
+                return children[index];
+              },
             ),
-          ),
-        if (!hideSearchBar)
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(
-              top: 0,
-              bottom: bottomPadding + 8,
+          BottomSheetAppBar(title: title, actions: actions),
+          if (!hideSearchBar)
+            Container(
+              width: double.infinity,
+              height: bottomPadding + 34,
+              decoration: BoxDecoration(
+                color: bottomSheetTheme.backgroundColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: bottomSheetTheme.backgroundColor ??
+                        Colors.black.withAlpha(180),
+                    blurRadius: 18,
+                    offset: const Offset(0, -18),
+                  ),
+                ],
+              ),
             ),
-            child: SearchBar(
-              autoFocus: children.length > 20 || autoFocus,
-              controller: searchController,
-              shadowColor:
-                  WidgetStatePropertyAll(bottomSheetTheme.backgroundColor),
-              elevation: WidgetStatePropertyAll(1.8),
-              leading: const Icon(Icons.search_rounded),
-              hintText: hintText,
-              onChanged: onChanged,
-              trailing: [
-                if (clearIconButton != null) clearIconButton!,
-              ],
+          if (!hideSearchBar)
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8).copyWith(
+                top: 0,
+                bottom: bottomPadding + 8,
+              ),
+              child: SearchBar(
+                autoFocus: children.length > 20 || autoFocus,
+                controller: searchController,
+                shadowColor:
+                    WidgetStatePropertyAll(bottomSheetTheme.backgroundColor),
+                elevation: WidgetStatePropertyAll(1.8),
+                leading: const Icon(Icons.search_rounded),
+                hintText: hintText,
+                onChanged: onChanged,
+                trailing: [
+                  if (clearIconButton != null) clearIconButton!,
+                ],
+              ),
             ),
-          ),
-      ],
-    );
+        ],
+      );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import '../utils/color.dart';
+import '../utils/motion.dart';
 import '../utils/size.dart';
 import 'body_card.dart';
 import 'page_loading_indicator.dart';
@@ -238,9 +239,30 @@ class _NinUiBody extends StatelessWidget {
                       Expanded(
                         child: BodyCard(
                           margin: EdgeInsets.zero,
-                          child: isPageLoading == true
-                              ? loadingBody ?? const PageLoadingIndicator()
-                              : body,
+                          child: AnimatedSwitcher(
+                            duration: M3Motion.skeletonFade,
+                            switchInCurve: M3Motion.standardDecelerate,
+                            switchOutCurve: M3Motion.standardAccelerate,
+                            layoutBuilder: (currentChild, previousChildren) => Stack(
+                              fit: StackFit.expand,
+                              alignment: Alignment.topLeft,
+                              children: <Widget>[
+                                ...previousChildren,
+                                if (currentChild != null) currentChild,
+                              ],
+                            ),
+                            child: isPageLoading == true
+                                ? KeyedSubtree(
+                                    key: const ValueKey('nin_ui_scaffold_loading'),
+                                    child: loadingBody ?? const PageLoadingIndicator(),
+                                  )
+                                : KeyedSubtree(
+                                    key: const ValueKey('nin_ui_scaffold_body'),
+                                    child: body,
+                                  ),
+                          ),
+
+
                         ),
                       ),
                     ],

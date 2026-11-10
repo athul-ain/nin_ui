@@ -1,4 +1,3 @@
-import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:nin_ui/nin_ui.dart';
 
@@ -78,7 +77,7 @@ class _OpenListTileCardState extends State<OpenListTileCard> {
 
     return Padding(
       padding: widget.margin,
-      child: OpenContainer(
+      child: M3OpenContainer(
         closedColor: cardColor,
         closedElevation: 0,
         openColor: bgColor,
