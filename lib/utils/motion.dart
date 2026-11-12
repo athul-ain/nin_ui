@@ -1,5 +1,5 @@
 import 'package:animations/animations.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Material 3 Motion Durations and Easings Reference:
 /// https://m3.material.io/styles/motion/transitions/transition-patterns
